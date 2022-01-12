@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import HYLikeLion.gitppo.gitppoProject.domain.term.Portfolio;
+import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 
 public class PortfolioDTOTest {
 

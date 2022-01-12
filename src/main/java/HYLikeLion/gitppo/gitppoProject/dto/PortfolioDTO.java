@@ -2,7 +2,7 @@ package HYLikeLion.gitppo.gitppoProject.dto;
 
 import java.util.List;
 
-import HYLikeLion.gitppo.gitppoProject.domain.term.Portfolio;
+import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

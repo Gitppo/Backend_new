@@ -1,4 +1,4 @@
-package HYLikeLion.gitppo.gitppoProject.domain.term;
+package HYLikeLion.gitppo.gitppoProject.domain.portfolio;
 
 import java.time.LocalDateTime;
 
