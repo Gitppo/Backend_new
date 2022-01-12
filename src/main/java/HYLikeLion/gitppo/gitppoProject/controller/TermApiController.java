@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/term")
+@RequestMapping("/api")
 public class TermApiController {
 
 	private final TermService termService;
 
-	@GetMapping("/signup")
+	@GetMapping("/term")
 	public ResponseEntity<TermDTO.GetResult> getTerms() throws NotFoundException {
 		List<Term> terms = termService.findTerms();
 		HttpHeaders header = new HttpHeaders();
@@ -38,7 +38,7 @@ public class TermApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
-	@PostMapping("/signup")
+	@PostMapping("/term")
 	public ResponseEntity<Boolean> saveAgreements(@RequestBody List<TermDTO.Post> agreements)
 		throws Exception {
 		List<TermAgreement> save = termService.saveTermAgreement(agreements);
