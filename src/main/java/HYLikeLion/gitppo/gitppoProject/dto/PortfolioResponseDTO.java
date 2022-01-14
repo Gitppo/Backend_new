@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-public class PortfolioDTO {
+public class PortfolioResponseDTO {
 
 	@NoArgsConstructor
 	@Getter
@@ -23,4 +23,20 @@ public class PortfolioDTO {
 			this.message = message;
 		}
 	}
+
+	@NoArgsConstructor
+	@Getter
+	public static class AddPortfolio {
+		private StatusEnum status;
+		private String message;
+		private Long id;
+
+		@Builder
+		public AddPortfolio(StatusEnum status, Long id, String message) {
+			this.status = status;
+			this.id = id;
+			this.message = message;
+		}
+	}
+
 }

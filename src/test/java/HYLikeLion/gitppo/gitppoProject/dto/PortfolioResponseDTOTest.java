@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 
-public class PortfolioDTOTest {
+public class PortfolioResponseDTOTest {
 
 	@Test
 	public void 롬복_기능_테스트() {
@@ -18,7 +18,7 @@ public class PortfolioDTOTest {
 		List<Portfolio> data = new ArrayList<>();
 
 		// when
-		PortfolioDTO.GetPortfolio dto = PortfolioDTO.GetPortfolio.builder()
+		PortfolioResponseDTO.GetPortfolio dto = PortfolioResponseDTO.GetPortfolio.builder()
 			.status(StatusEnum.OK)
 			.data(data)
 			.message(message)

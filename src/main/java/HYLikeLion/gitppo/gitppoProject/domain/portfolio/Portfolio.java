@@ -35,12 +35,6 @@ public class Portfolio {
 	@NonNull
 	private String pfName;
 
-	@CreatedDate
-	private LocalDateTime pfWdate;
-
-	@LastModifiedDate
-	private LocalDateTime pfUdate;
-
 	private int pfTemplate;
 
 	@NonNull
