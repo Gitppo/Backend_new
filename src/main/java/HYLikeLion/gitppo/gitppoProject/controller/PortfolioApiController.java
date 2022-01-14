@@ -30,7 +30,7 @@ public class PortfolioApiController {
 
 	@GetMapping("")
 	public ResponseEntity<PortfolioResponseDTO.GetPortfolio> getPortfolio() {
-		List<Portfolio> portfolios = new ArrayList<>();
+		List<Portfolio> portfolios = portfolioService.findAll();
 		HttpHeaders header = new HttpHeaders();
 
 		PortfolioResponseDTO.GetPortfolio dto = PortfolioResponseDTO.GetPortfolio.builder()
