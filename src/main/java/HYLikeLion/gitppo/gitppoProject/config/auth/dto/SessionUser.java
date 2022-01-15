@@ -8,12 +8,14 @@ import lombok.Getter;
 
 @Getter
 public class SessionUser implements Serializable {
+	private Long id;
 	private String name;
 	private String email;
 	private Long githubId;
 	private LocalDate loginDate;
 
 	public SessionUser(User user) {
+		this.id = user.getId();
 		this.name = user.getName();
 		this.email = user.getEmail();
 		this.githubId = user.getGithubId();
