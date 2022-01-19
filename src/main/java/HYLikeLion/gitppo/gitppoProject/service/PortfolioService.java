@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import HYLikeLion.gitppo.gitppoProject.dto.PortfolioRequestDTO;
 import HYLikeLion.gitppo.gitppoProject.repository.Portfolio.PortfolioRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class PortfolioService {
+
 	private final PortfolioRepository portfolioRepository;
+
+	@Transactional
+	public List<Portfolio> findByUser(User user) {
+		return portfolioRepository.findByUser(user);
+	}
 
 	@Transactional
 	public List<Portfolio> findAll() {

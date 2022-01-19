@@ -14,8 +14,8 @@ import HYLikeLion.gitppo.gitppoProject.repository.Term.TermRepository;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class TermService {
 
 	private final TermRepository termRepository;

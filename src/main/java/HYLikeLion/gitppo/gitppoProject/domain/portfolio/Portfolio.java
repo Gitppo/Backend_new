@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import HYLikeLion.gitppo.gitppoProject.domain.BaseTimeEntity;
+import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,9 @@ public class Portfolio extends BaseTimeEntity {
 	@Column(name = "PORTFOLIO_ID")
 	private Long id;
 
-	// @ManyToOne
-	// @JoinColumn(name="USR_ID")
-	// private User user;
+	@ManyToOne
+	@JoinColumn(name="USR_ID")
+	private User user;
 
 	@NonNull
 	private String pfName;
@@ -49,8 +50,8 @@ public class Portfolio extends BaseTimeEntity {
 	private Boolean pfTmpSave;
 
 	@Builder
-	public Portfolio(/*User user, */ String pfName, int pfTemplate, Boolean pfGrass, Boolean pfStar, String pfUuid, Boolean pfTmpSave) {
-		// this.user = user;
+	public Portfolio(User user, String pfName, int pfTemplate, Boolean pfGrass, Boolean pfStar, String pfUuid, Boolean pfTmpSave) {
+		this.user = user;
 		this.pfName = pfName;
 		this.pfTemplate = pfTemplate;
 		this.pfGrass = pfGrass;

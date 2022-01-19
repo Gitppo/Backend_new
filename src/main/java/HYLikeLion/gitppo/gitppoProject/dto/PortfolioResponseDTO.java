@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class PortfolioResponseDTO {
 
 	@NoArgsConstructor
+	@Getter
 	public static class GetPortfolio {
 		private StatusEnum status;
 		private String message;
@@ -24,6 +25,7 @@ public class PortfolioResponseDTO {
 	}
 
 	@NoArgsConstructor
+	@Getter
 	public static class AddPortfolio {
 		private StatusEnum status;
 		private String message;
