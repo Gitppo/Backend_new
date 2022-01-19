@@ -3,6 +3,7 @@ package HYLikeLion.gitppo.gitppoProject.dto;
 import java.util.UUID;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

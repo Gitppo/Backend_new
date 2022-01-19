@@ -44,8 +44,8 @@ public class PortfolioApiController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<PortfolioResponseDTO.AddPortfolio> addPortfolio(@RequestBody PortfolioRequestDTO.AddPortfolio requestDTO) {
-		Long id = portfolioService.save(requestDTO);
+	public ResponseEntity<PortfolioResponseDTO.AddPortfolio> addPortfolio(@RequestBody PortfolioRequestDTO.AddPortfolio requestDTO, @LoginUser SessionUser user) {
+		Long id = portfolioService.save(userService.findById(user.getId()), requestDTO);
 		HttpHeaders header = new HttpHeaders();
 
 		PortfolioResponseDTO.AddPortfolio dto = PortfolioResponseDTO.AddPortfolio.builder()

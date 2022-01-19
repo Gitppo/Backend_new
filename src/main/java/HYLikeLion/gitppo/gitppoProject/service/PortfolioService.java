@@ -28,7 +28,10 @@ public class PortfolioService {
 	}
 
 	@Transactional
-	public Long save(PortfolioRequestDTO.AddPortfolio requestDTO) {
-		return portfolioRepository.save(requestDTO.toEntity()).getId();
+	public Long save(User user, PortfolioRequestDTO.AddPortfolio requestDTO) {
+		Portfolio portfolio = requestDTO.toEntity();
+		portfolio.setUser(user);
+
+		return portfolioRepository.save(portfolio).getId();
 	}
 }

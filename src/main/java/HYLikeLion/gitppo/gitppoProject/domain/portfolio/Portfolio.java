@@ -59,4 +59,8 @@ public class Portfolio extends BaseTimeEntity {
 		this.pfUuid = pfUuid;
 		this.pfTmpSave = pfTmpSave;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
