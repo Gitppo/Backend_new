@@ -1,5 +1,6 @@
 package HYLikeLion.gitppo.gitppoProject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -7,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import HYLikeLion.gitppo.gitppoProject.domain.user.User;
-import HYLikeLion.gitppo.gitppoProject.dto.PortfolioRequestDTO;
+import HYLikeLion.gitppo.gitppoProject.dto.PortfolioDTO;
 import HYLikeLion.gitppo.gitppoProject.repository.Portfolio.PortfolioRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -23,12 +24,7 @@ public class PortfolioService {
 	}
 
 	@Transactional
-	public List<Portfolio> findAll() {
-		return portfolioRepository.findAll();
-	}
-
-	@Transactional
-	public Long save(User user, PortfolioRequestDTO.AddPortfolio requestDTO) {
+	public Long save(User user, PortfolioDTO.AddPortfolio requestDTO) {
 		Portfolio portfolio = requestDTO.toEntity();
 		portfolio.setUser(user);
 

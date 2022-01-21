@@ -63,4 +63,5 @@ public class Portfolio extends BaseTimeEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 }
