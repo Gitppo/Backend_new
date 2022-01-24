@@ -36,7 +36,7 @@ public class PortfolioApiController {
 	private final PortfolioService portfolioService;
 
 	@GetMapping("")
-	public ResponseEntity<ResponseDTO.ResponseList> getPortfolio(@LoginUser SessionUser user) {
+	public ResponseEntity<PortfolioDTO.ResponseList> getPortfolio(@LoginUser SessionUser user) {
 		List<Portfolio> portfolios = portfolioService.findByUser(userService.findById(user.getId()));
 		HttpHeaders header = new HttpHeaders();
 
@@ -45,9 +45,9 @@ public class PortfolioApiController {
 			data.add(PortfolioDTO.GetPortfolio.from(p));
 		}
 
-		ResponseDTO.ResponseList dto = ResponseDTO.ResponseList.builder()
+		PortfolioDTO.ResponseList dto = PortfolioDTO.ResponseList.builder()
 			.status(StatusEnum.OK)
-			.data(Collections.singletonList(data))
+			.data(data)
 			.message("포트폴리오 조회 완료")
 			.build();
 

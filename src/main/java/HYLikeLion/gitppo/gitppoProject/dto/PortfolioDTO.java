@@ -1,5 +1,6 @@
 package HYLikeLion.gitppo.gitppoProject.dto;
 
+import java.util.List;
 import java.util.UUID;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
@@ -61,6 +62,21 @@ public class PortfolioDTO {
 
 		public static GetPortfolio from(Portfolio p) {
 			return new GetPortfolio(p.getId(), p.getUser().getId(), p.getPfName(), p.getPfTemplate(), p.getPfGrass(), p.getPfStar(), p.getPfUuid(), p.getPfTmpSave());
+		}
+	}
+
+	@NoArgsConstructor
+	@Getter
+	public static class ResponseList {
+		private StatusEnum status;
+		private String message;
+		private List<GetPortfolio> data;
+
+		@Builder
+		public ResponseList(StatusEnum status, String message, List<GetPortfolio> data) {
+			this.status = status;
+			this.message = message;
+			this.data = data;
 		}
 	}
 

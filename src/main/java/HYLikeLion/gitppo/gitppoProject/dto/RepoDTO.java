@@ -1,6 +1,7 @@
 package HYLikeLion.gitppo.gitppoProject.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Builder;
@@ -41,6 +42,21 @@ public class RepoDTO {
 			this.readme = readme;
 		}
 
+	}
+
+	@NoArgsConstructor
+	@Getter
+	public static class ResponseList {
+		private StatusEnum status;
+		private String message;
+		private List<RequestRepo> data;
+
+		@Builder
+		public ResponseList(StatusEnum status, String message, List<RequestRepo> data) {
+			this.status = status;
+			this.message = message;
+			this.data = data;
+		}
 	}
 
 }
