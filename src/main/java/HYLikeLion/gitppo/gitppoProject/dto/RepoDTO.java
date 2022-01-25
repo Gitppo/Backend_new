@@ -59,4 +59,46 @@ public class RepoDTO {
 		}
 	}
 
+	@NoArgsConstructor
+	@Getter
+	public static class AddRepo {
+		private Long pfId;
+		private String rpName;
+		private String rpShortContents;
+		private String rpReadme;
+		private Long rpStar;
+		private LocalDate rpSdate;
+		private LocalDate rpEdate;
+		private String rpRole;
+		private String rpLongContents;
+
+		@Builder
+		public AddRepo(Long pfId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
+			this.pfId = pfId;
+			this.rpName = rpName;
+			this.rpShortContents = rpShortContents;
+			this.rpReadme = rpReadme;
+			this.rpStar = rpStar;
+			this.rpSdate = rpSdate;
+			this.rpEdate = rpEdate;
+			this.rpRole = rpRole;
+			this.rpLongContents = rpLongContents;
+		}
+	}
+
+	@NoArgsConstructor
+	@Getter
+	public static class ResponseIds {
+		private StatusEnum status;
+		private String message;
+		private List<Long> data;
+
+		@Builder
+		public ResponseIds(StatusEnum status, String message, List<Long> data) {
+			this.status = status;
+			this.message = message;
+			this.data = data;
+		}
+	}
+
 }

@@ -13,7 +13,6 @@ import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Getter
 @NoArgsConstructor
@@ -22,31 +21,28 @@ public class Portfolio extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PORTFOLIO_ID")
+	@Column(name = "PF_ID")
 	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name="USR_ID")
 	private User user;
 
-	@NonNull
+	@Column(nullable = false)
 	private String pfName;
 
 	private int pfTemplate;
 
-	@NonNull
-	@Column(columnDefinition = "tinyint default 1")
+	@Column(nullable = false, columnDefinition = "tinyint default 1")
 	private Boolean pfGrass;
 
-	@NonNull
-	@Column(columnDefinition = "tinyint default 1")
+	@Column(nullable = false, columnDefinition = "tinyint default 1")
 	private Boolean pfStar;
 
-	@NonNull
+	@Column(nullable = false)
 	private String pfUuid;
 
-	@NonNull
-	@Column(columnDefinition = "tinyint default 1")
+	@Column(nullable = false, columnDefinition = "tinyint default 1")
 	private Boolean pfTmpSave;
 
 	@Builder

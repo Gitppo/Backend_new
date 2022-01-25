@@ -1,4 +1,4 @@
-package HYLikeLion.gitppo.gitppoProject.domain.Repo;
+package HYLikeLion.gitppo.gitppoProject.domain.repo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

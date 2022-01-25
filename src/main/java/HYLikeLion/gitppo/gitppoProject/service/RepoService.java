@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import HYLikeLion.gitppo.gitppoProject.domain.Repo.Branch;
+import HYLikeLion.gitppo.gitppoProject.domain.repo.Branch;
+import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
 import HYLikeLion.gitppo.gitppoProject.dto.RepoDTO;
+import HYLikeLion.gitppo.gitppoProject.repository.Portfolio.PortfolioRepository;
 import HYLikeLion.gitppo.gitppoProject.repository.Repo.RepoRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class RepoService {
 
 	private final RepoRepository repoRepository;
+	private final PortfolioRepository portfolioRepository;
 
 	@Transactional
 	public List<RepoDTO.RequestRepo> getRepository(String token, String name) throws Exception {
@@ -91,5 +94,22 @@ public class RepoService {
 		}
 
 		return repos;
+	}
+
+	@Transactional
+	public Long addRepos(RepoDTO.AddRepo data) {
+		Repo repo = Repo.builder()
+			.portfolio(portfolioRepository.getById(data.getPfId()))
+			.rpName(data.getRpName())
+			.rpShortContents(data.getRpShortContents())
+			.rpReadme(data.getRpReadme())
+			.rpStar(data.getRpStar())
+			.rpSdate(data.getRpSdate())
+			.rpEdate(data.getRpEdate())
+			.rpRole(data.getRpRole())
+			.rpLongContents(data.getRpLongContents())
+			.build();
+
+		return repoRepository.save(repo).getId();
 	}
 }
