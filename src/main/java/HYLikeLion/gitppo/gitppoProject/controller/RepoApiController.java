@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,6 +65,42 @@ public class RepoApiController {
 			.status(StatusEnum.OK)
 			.data(ids)
 			.message("레포 저장 완료")
+			.build();
+		HttpHeaders header = new HttpHeaders();
+
+		return new ResponseEntity<>(dto, header, HttpStatus.OK);
+	}
+
+	@PutMapping("")
+	public ResponseEntity<RepoDTO.ResponseIds> editRepository(@RequestBody List<RepoDTO.EditRepo> body, @LoginUser SessionUser user) {
+		List<Long> ids = new ArrayList<>();
+
+		for (RepoDTO.EditRepo data : body) {
+			ids.add(repoService.editRepo(data));
+		}
+
+		RepoDTO.ResponseIds dto = RepoDTO.ResponseIds.builder()
+			.status(StatusEnum.OK)
+			.data(ids)
+			.message("레포 수정 완료")
+			.build();
+		HttpHeaders header = new HttpHeaders();
+
+		return new ResponseEntity<>(dto, header, HttpStatus.OK);
+	}
+
+	@PostMapping("/group")
+	public ResponseEntity<RepoDTO.ResponseIds> addRepoGroup(@RequestBody List<RepoDTO.AddRepoGroup> body, @LoginUser SessionUser user) {
+		List<Long> ids = new ArrayList<>();
+
+		for (RepoDTO.AddRepoGroup data : body) {
+			ids.add(repoService.addRepoGroup(data));
+		}
+
+		RepoDTO.ResponseIds dto = RepoDTO.ResponseIds.builder()
+			.status(StatusEnum.OK)
+			.data(ids)
+			.message("그룹 추가 완료")
 			.build();
 		HttpHeaders header = new HttpHeaders();
 

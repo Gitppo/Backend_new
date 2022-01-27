@@ -16,8 +16,10 @@ import org.springframework.web.client.RestTemplate;
 
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Branch;
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
+import HYLikeLion.gitppo.gitppoProject.domain.repo.RepoGroup;
 import HYLikeLion.gitppo.gitppoProject.dto.RepoDTO;
 import HYLikeLion.gitppo.gitppoProject.repository.Portfolio.PortfolioRepository;
+import HYLikeLion.gitppo.gitppoProject.repository.Repo.RepoGroupRepository;
 import HYLikeLion.gitppo.gitppoProject.repository.Repo.RepoRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +29,7 @@ public class RepoService {
 
 	private final RepoRepository repoRepository;
 	private final PortfolioRepository portfolioRepository;
+	private final RepoGroupRepository repoGroupRepository;
 
 	@Transactional
 	public List<RepoDTO.RequestRepo> getRepository(String token, String name) throws Exception {
@@ -108,8 +111,29 @@ public class RepoService {
 			.rpEdate(data.getRpEdate())
 			.rpRole(data.getRpRole())
 			.rpLongContents(data.getRpLongContents())
+			.repoGroup(repoGroupRepository.getById(data.getRpGpId()))
 			.build();
 
 		return repoRepository.save(repo).getId();
+	}
+
+	@Transactional
+	public Long editRepo(RepoDTO.EditRepo data) {
+		Repo repo = repoRepository.findById(data.getId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 레포가 존재하지 않습니다. id=" + data.getId()));
+
+		repo.update(data.getRpName(), data.getRpShortContents(), data.getRpReadme(), data.getRpStar(), data.getRpSdate(), data.getRpEdate(), data.getRpRole(), data.getRpLongContents(), repoGroupRepository.getById(data.getRpGpId()));
+
+		return data.getId();
+	}
+
+	@Transactional
+	public Long addRepoGroup(RepoDTO.AddRepoGroup data) {
+		RepoGroup repoGroup = RepoGroup.builder()
+			.portfolio(portfolioRepository.getById(data.getPfId()))
+			.gpName(data.getGpName())
+			.build();
+
+		return repoGroupRepository.save(repoGroup).getId();
 	}
 }

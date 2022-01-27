@@ -72,4 +72,16 @@ public class Repo extends BaseTimeEntity {
 		this.rpRole = rpRole;
 		this.rpLongContents = rpLongContents;
 	}
+
+	public void update(String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, RepoGroup repoGroup) {
+		this.rpName = rpName;
+		this.rpShortContents = rpShortContents;
+		this.rpReadme = rpReadme;
+		this.rpStar = rpStar;
+		this.rpSdate = rpSdate;
+		this.rpEdate = rpEdate;
+		this.rpRole = rpRole;
+		this.rpLongContents = rpLongContents;
+		this.repoGroup = repoGroup;
+	}
 }
