@@ -30,4 +30,13 @@ public class PortfolioService {
 
 		return portfolioRepository.save(portfolio).getId();
 	}
+
+	@Transactional
+	public Long saveCompletely(PortfolioDTO.SavePortfolio data) {
+		Portfolio portfolio = portfolioRepository.getById(data.getPfId());
+
+		portfolio.saveCompletely(data.getPfTemplate(), false);
+
+		return data.getPfId();
+	}
 }

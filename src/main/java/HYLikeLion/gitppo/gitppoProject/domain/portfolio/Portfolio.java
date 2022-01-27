@@ -60,4 +60,8 @@ public class Portfolio extends BaseTimeEntity {
 		this.user = user;
 	}
 
+	public void saveCompletely(int pfTemplate, Boolean pfTmpSave) {
+		this.pfTemplate = pfTemplate;
+		this.pfTmpSave = pfTmpSave;
+	}
 }

@@ -80,4 +80,17 @@ public class PortfolioDTO {
 		}
 	}
 
+	@NoArgsConstructor
+	@Getter
+	public static class SavePortfolio {
+		private Long pfId;
+		private int pfTemplate;
+
+		@Builder
+		public SavePortfolio(Long pfId, int pfTemplate) {
+			this.pfId = pfId;
+			this.pfTemplate = pfTemplate;
+		}
+	}
+
 }

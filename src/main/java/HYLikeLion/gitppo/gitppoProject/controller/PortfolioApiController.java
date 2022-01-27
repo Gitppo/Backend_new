@@ -68,4 +68,18 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@PostMapping("/complete")
+	public ResponseEntity<ResponseDTO.ResponseId> saveCompletelyPortfolio(@RequestBody PortfolioDTO.SavePortfolio requestDTO, @LoginUser SessionUser user) {
+		Long id = portfolioService.saveCompletely(requestDTO);
+		HttpHeaders header = new HttpHeaders();
+
+		ResponseDTO.ResponseId dto = ResponseDTO.ResponseId.builder()
+			.status(StatusEnum.OK)
+			.id(id)
+			.message("포트폴리오 저장 및 템플릿 저장 완료")
+			.build();
+
+		return new ResponseEntity<>(dto, header, HttpStatus.OK);
+	}
+
 }
