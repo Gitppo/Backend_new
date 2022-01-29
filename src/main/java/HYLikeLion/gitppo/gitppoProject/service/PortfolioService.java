@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
 import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import HYLikeLion.gitppo.gitppoProject.dto.PortfolioDTO;
 import HYLikeLion.gitppo.gitppoProject.repository.Portfolio.PortfolioRepository;
@@ -38,5 +39,24 @@ public class PortfolioService {
 		portfolio.saveCompletely(data.getPfTemplate(), false);
 
 		return data.getPfId();
+	}
+
+	@Transactional
+	public PortfolioDTO.GetAllPortfolio findById(Long id) {
+		Portfolio portfolio = portfolioRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. ㅑㅇ=" + id));
+
+		return PortfolioDTO.GetAllPortfolio.builder()
+			.id(portfolio.getId())
+			.usrId(portfolio.getUser().getId())
+			.pfName(portfolio.getPfName())
+			.pfTmpSave(portfolio.getPfTmpSave())
+			.pfGrass(portfolio.getPfGrass())
+			.pfStar(portfolio.getPfStar())
+			.pfUuid(portfolio.getPfUuid())
+			.pfTemplate(portfolio.getPfTemplate())
+			.personal(portfolio.getPersonal())
+			.repo(portfolio.getRepo())
+			.build();
 	}
 }

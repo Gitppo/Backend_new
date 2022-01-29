@@ -3,7 +3,9 @@ package HYLikeLion.gitppo.gitppoProject.dto;
 import java.util.List;
 import java.util.UUID;
 
+import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -93,4 +95,47 @@ public class PortfolioDTO {
 		}
 	}
 
+	@NoArgsConstructor
+	@Getter
+	public static class GetAllPortfolio {
+		private Long id;
+		private Long usrId;
+		private String pfName;
+		private int pfTemplate;
+		private Boolean pfGrass;
+		private Boolean pfStar;
+		private String pfUuid;
+		private Boolean pfTmpSave;
+		private Personal personal;
+		private List<Repo> repo;
+
+		@Builder
+		public GetAllPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfGrass, Boolean pfStar, String pfUuid, Boolean pfTmpSave, Personal personal, List<Repo> repo) {
+			this.id = id;
+			this.usrId = usrId;
+			this.pfName = pfName;
+			this.pfTmpSave = pfTmpSave;
+			this.pfGrass = pfGrass;
+			this.pfStar = pfStar;
+			this.pfUuid = pfUuid;
+			this.pfTemplate = pfTemplate;
+			this.personal = personal;
+			this.repo = repo;
+		}
+	}
+
+	@NoArgsConstructor
+	@Getter
+	public static class ResponsePortfolio {
+		private StatusEnum status;
+		private String message;
+		private GetAllPortfolio data;
+
+		@Builder
+		public ResponsePortfolio(StatusEnum status, String message, GetAllPortfolio data) {
+			this.status = status;
+			this.message = message;
+			this.data = data;
+		}
+	}
 }

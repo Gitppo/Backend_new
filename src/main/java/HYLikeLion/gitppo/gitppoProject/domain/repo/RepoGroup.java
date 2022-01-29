@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class RepoGroup {
 
 	@ManyToOne
 	@JoinColumn(name = "PF_ID")
+	@Getter(AccessLevel.NONE)
 	private Portfolio portfolio;
 
 	@Builder

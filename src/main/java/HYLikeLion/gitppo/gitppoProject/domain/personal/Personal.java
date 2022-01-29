@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,9 +33,9 @@ public class Personal {
 	@Column(name = "PERSONAL_ID")
 	private Long id;
 
-	// @OneToOne
-	// @JoinColumn(name = "PORTFOLIO_ID")
-	// private Portfolio portfolio;
+	@OneToOne(mappedBy = "personal", orphanRemoval = true)
+	@Getter(AccessLevel.NONE)
+	private Portfolio portfolio;
 
 	@OneToOne(orphanRemoval = true)
 	@JoinColumn(name = "INTRO_ID")

@@ -13,7 +13,7 @@ public class PersonalDTO {
 	@Data
 	public static class AddPersonal {
 		private Long id;
-		// private Portfolio portfolio;
+		private Portfolio portfolio;
 		private Introduction introduction;
 		private BasicInfo basicInfo;
 
@@ -29,7 +29,7 @@ public class PersonalDTO {
 		public Personal toEntity() {
 			return Personal.builder()
 				.id(id)
-				// .portfolio(portfolio)
+				.portfolio(portfolio)
 				.introduction(introduction)
 				.basicInfo(basicInfo)
 				.careers(careers)

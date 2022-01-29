@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.sound.sampled.Port;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +78,20 @@ public class PortfolioApiController {
 			.status(StatusEnum.OK)
 			.id(id)
 			.message("포트폴리오 저장 및 템플릿 저장 완료")
+			.build();
+
+		return new ResponseEntity<>(dto, header, HttpStatus.OK);
+	}
+
+	@GetMapping("/all")
+	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getAllPortfolio(@Param("id") Long id, @LoginUser SessionUser user) {
+		PortfolioDTO.GetAllPortfolio portfolio = portfolioService.findById(id);
+		HttpHeaders header = new HttpHeaders();
+
+		PortfolioDTO.ResponsePortfolio dto = PortfolioDTO.ResponsePortfolio.builder()
+			.status(StatusEnum.OK)
+			.data(portfolio)
+			.message("포트폴리오 조회 완료 id=" + id)
 			.build();
 
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
