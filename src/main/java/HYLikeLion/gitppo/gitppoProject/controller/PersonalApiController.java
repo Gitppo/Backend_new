@@ -21,6 +21,13 @@ import HYLikeLion.gitppo.gitppoProject.dto.PersonalDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.ResponseDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.StatusEnum;
 import HYLikeLion.gitppo.gitppoProject.service.PersonalService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -30,9 +37,14 @@ import lombok.RequiredArgsConstructor;
 public class PersonalApiController {
 	private final PersonalService personalService;
 
-	// personal id값으로 가져옴
+	@Operation(summary = "개인정보 보회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "개인 정보 조회 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
+	})
 	@GetMapping("personal")
-	public ResponseEntity<ResponseDTO.ResponseObject> getPortfolio(@RequestParam Long id) throws NotFoundException {
+	public ResponseEntity<ResponseDTO.ResponseObject> getPortfolio(
+		@Parameter(description = "Personal id", example = "1") @RequestParam Long id) throws
+		NotFoundException {
 		Personal personal = personalService.getPersonal(id);
 		HttpHeaders header = new HttpHeaders();
 
@@ -45,9 +57,13 @@ public class PersonalApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
-	// personal 저장 + 수정
+	@Operation(summary = "개인정보 저장/수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "개인 정보 저장 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
+	})
 	@PostMapping("personal")
-	public ResponseEntity<ResponseDTO.ResponseObject> postPortfolio(@RequestBody PersonalDTO.AddPersonal dto) {
+	public ResponseEntity<ResponseDTO.ResponseObject> postPortfolio(
+		@RequestBody PersonalDTO.AddPersonal dto) {
 		Personal personal = personalService.savePersonal(dto);
 		HttpHeaders header = new HttpHeaders();
 
@@ -61,9 +77,13 @@ public class PersonalApiController {
 
 	}
 
-	// personal 삭제
+	@Operation(summary = "개인정보 삭제")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "개인 정보 삭제 완료"),
+	})
 	@DeleteMapping("personal")
-	public ResponseEntity<ResponseDTO.ResponseId> deletePortfolio(@RequestParam Long id) {
+	public ResponseEntity<ResponseDTO.ResponseId> deletePortfolio(
+		@Parameter(description = "Personal id", required = true, example = "1") @RequestParam Long id) {
 		personalService.deletePersonal(id);
 
 		HttpHeaders header = new HttpHeaders();

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
+@Schema(description = "수상 실적")
 public class Award {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,19 +34,23 @@ public class Award {
 	private Long id;
 
 	@NonNull
+	@Schema(description = "이름")
 	private String awName;
 
 	@NonNull
+	@Schema(description = "수상 내용")
 	private String awContents;
 
 	@NonNull
+	@Schema(description = "수상일")
 	private LocalDate awDate;
 
 	@NonNull
+	@Schema(description = "발급기관")
 	private String awOrganization;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="PERSONAL_ID")
+	@JoinColumn(name = "PERSONAL_ID")
 	@Getter(AccessLevel.NONE)
 	private Personal personal;
 }

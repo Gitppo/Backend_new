@@ -16,9 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import HYLikeLion.gitppo.gitppoProject.config.auth.LoginUser;
 import HYLikeLion.gitppo.gitppoProject.config.auth.dto.SessionUser;
+import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.dto.RepoDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.StatusEnum;
 import HYLikeLion.gitppo.gitppoProject.service.RepoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -31,6 +37,10 @@ public class RepoApiController {
 	@Value("${external.private}")
 	private String token;
 
+	@Operation(summary = "레포지토리 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "레포지토리 조회 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseList.class))),
+	})
 	@GetMapping("")
 	public ResponseEntity<RepoDTO.ResponseList> getRepository(@LoginUser SessionUser user) throws Exception {
 
@@ -53,8 +63,13 @@ public class RepoApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "레포지토리 저장")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "레포지토리 저장 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseIds.class))),
+	})
 	@PostMapping("")
-	public ResponseEntity<RepoDTO.ResponseIds> addRepository(@RequestBody List<RepoDTO.AddRepo> body, @LoginUser SessionUser user) {
+	public ResponseEntity<RepoDTO.ResponseIds> addRepository(@RequestBody List<RepoDTO.AddRepo> body,
+		@LoginUser SessionUser user) {
 		List<Long> ids = new ArrayList<>();
 
 		for (RepoDTO.AddRepo data : body) {
@@ -71,8 +86,13 @@ public class RepoApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "레포지토리 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "레포지토리 수정 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseIds.class))),
+	})
 	@PutMapping("")
-	public ResponseEntity<RepoDTO.ResponseIds> editRepository(@RequestBody List<RepoDTO.EditRepo> body, @LoginUser SessionUser user) {
+	public ResponseEntity<RepoDTO.ResponseIds> editRepository(@RequestBody List<RepoDTO.EditRepo> body,
+		@LoginUser SessionUser user) {
 		List<Long> ids = new ArrayList<>();
 
 		for (RepoDTO.EditRepo data : body) {
@@ -89,8 +109,13 @@ public class RepoApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "레포지토리 그룹 추가")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "레포지토리 그룹 추가 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseIds.class))),
+	})
 	@PostMapping("/group")
-	public ResponseEntity<RepoDTO.ResponseIds> addRepoGroup(@RequestBody List<RepoDTO.AddRepoGroup> body, @LoginUser SessionUser user) {
+	public ResponseEntity<RepoDTO.ResponseIds> addRepoGroup(@RequestBody List<RepoDTO.AddRepoGroup> body,
+		@LoginUser SessionUser user) {
 		List<Long> ids = new ArrayList<>();
 
 		for (RepoDTO.AddRepoGroup data : body) {

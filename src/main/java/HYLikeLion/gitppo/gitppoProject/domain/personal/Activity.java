@@ -11,9 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -24,6 +24,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
+@Schema(description = "활동")
 public class Activity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,16 +32,21 @@ public class Activity {
 	private Long id;
 
 	@NonNull
+	@Schema(description = "활동명")
 	private String actName;
 
 	@NonNull
+	@Schema(description = "활동 내용")
 	private String actContents;
 
 	@NonNull
+	@Schema(description = "활동 시작일")
 	private LocalDate actStartDate;
 
+	@Schema(description = "활동 종료일")
 	private LocalDate actEndDate;
 
+	@Schema(description = "활동 링크")
 	private String actLink;
 
 	@ManyToOne(cascade = CascadeType.ALL)

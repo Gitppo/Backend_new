@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
+@Schema(description = "기술 스택")
 public class Skill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +32,11 @@ public class Skill {
 	private Long id;
 
 	@NonNull
+	@Schema(description = "이름")
 	private String skName;
 
 	@NonNull
+	@Schema(description = "레벨")
 	private String skLevel;
 
 	@ManyToOne(cascade = CascadeType.ALL)

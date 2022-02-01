@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.NonNull;
 @Entity
 @Getter
 @NoArgsConstructor
+@Schema(description = "약관 동의 여부")
 public class TermAgreement {
 
 	@Id
@@ -36,10 +38,12 @@ public class TermAgreement {
 	private Term term;
 
 	@NonNull
+	@Schema(description = "약관 동의일")
 	private LocalDateTime agreeDate;
 
 	@NonNull
 	@Column(nullable = false, columnDefinition = "tinyint default 1")
+	@Schema(description = "약관 동의 여부", defaultValue = "1")
 	private Boolean isAgree;
 
 	@Builder

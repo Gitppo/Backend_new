@@ -21,11 +21,17 @@ import HYLikeLion.gitppo.gitppoProject.config.auth.LoginUser;
 import HYLikeLion.gitppo.gitppoProject.config.auth.dto.SessionUser;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import HYLikeLion.gitppo.gitppoProject.dto.PortfolioDTO;
+import HYLikeLion.gitppo.gitppoProject.dto.RepoDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.ResponseDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.StatusEnum;
 import HYLikeLion.gitppo.gitppoProject.service.PortfolioService;
 import HYLikeLion.gitppo.gitppoProject.service.RepoService;
 import HYLikeLion.gitppo.gitppoProject.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -36,6 +42,10 @@ public class PortfolioApiController {
 	private final UserService userService;
 	private final PortfolioService portfolioService;
 
+	@Operation(summary = "포트폴리오 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseList.class))),
+	})
 	@GetMapping("")
 	public ResponseEntity<PortfolioDTO.ResponseList> getPortfolio(@LoginUser SessionUser user) {
 		List<Portfolio> portfolios = portfolioService.findByUser(userService.findById(user.getId()));
@@ -55,8 +65,13 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "포트폴리오 추가")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "레포지토리 추가 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseId.class))),
+	})
 	@PostMapping("")
-	public ResponseEntity<ResponseDTO.ResponseId> addPortfolio(@RequestBody PortfolioDTO.AddPortfolio requestDTO, @LoginUser SessionUser user) {
+	public ResponseEntity<ResponseDTO.ResponseId> addPortfolio(@RequestBody PortfolioDTO.AddPortfolio requestDTO,
+		@LoginUser SessionUser user) {
 		Long id = portfolioService.save(userService.findById(user.getId()), requestDTO);
 		HttpHeaders header = new HttpHeaders();
 
@@ -69,8 +84,13 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "포트폴리오 저장")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "포트폴리오 저장 및 템플릿 저장 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseId.class))),
+	})
 	@PostMapping("/complete")
-	public ResponseEntity<ResponseDTO.ResponseId> saveCompletelyPortfolio(@RequestBody PortfolioDTO.SavePortfolio requestDTO, @LoginUser SessionUser user) {
+	public ResponseEntity<ResponseDTO.ResponseId> saveCompletelyPortfolio(
+		@RequestBody PortfolioDTO.SavePortfolio requestDTO, @LoginUser SessionUser user) {
 		Long id = portfolioService.saveCompletely(requestDTO);
 		HttpHeaders header = new HttpHeaders();
 
@@ -83,8 +103,13 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "포트폴리오 id 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = Portfolio.class))),
+	})
 	@GetMapping("/all")
-	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getAllPortfolio(@Param("id") Long id, @LoginUser SessionUser user) {
+	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getAllPortfolio(@Param("id") Long id,
+		@LoginUser SessionUser user) {
 		PortfolioDTO.GetAllPortfolio portfolio = portfolioService.findById(id);
 		HttpHeaders header = new HttpHeaders();
 

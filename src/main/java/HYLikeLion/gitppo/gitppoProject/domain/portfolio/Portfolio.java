@@ -19,6 +19,7 @@ import HYLikeLion.gitppo.gitppoProject.domain.personal.Career;
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
 import HYLikeLion.gitppo.gitppoProject.domain.user.User;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,6 +28,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
+@Schema(description = "포트폴리오")
 public class Portfolio extends BaseTimeEntity {
 
 	@Id
@@ -35,24 +37,30 @@ public class Portfolio extends BaseTimeEntity {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name="USR_ID")
+	@JoinColumn(name = "USR_ID")
 	private User user;
 
 	@Column(nullable = false)
+	@Schema(description = "제목")
 	private String pfName;
 
+	@Schema(description = "디자인 템플릿 번호")
 	private int pfTemplate;
 
 	@Column(nullable = false, columnDefinition = "tinyint default 1")
+	@Schema(description = "잔디 노출 여부")
 	private Boolean pfGrass;
 
 	@Column(nullable = false, columnDefinition = "tinyint default 1")
+	@Schema(description = "스타 노출 여부")
 	private Boolean pfStar;
 
 	@Column(nullable = false)
+	@Schema(description = "uuid")
 	private String pfUuid;
 
 	@Column(nullable = false, columnDefinition = "tinyint default 1")
+	@Schema(description = "임시저장 여부")
 	private Boolean pfTmpSave;
 
 	@OneToOne
@@ -63,7 +71,8 @@ public class Portfolio extends BaseTimeEntity {
 	private List<Repo> repo = new ArrayList<>();
 
 	@Builder
-	public Portfolio(User user, String pfName, int pfTemplate, Boolean pfGrass, Boolean pfStar, String pfUuid, Boolean pfTmpSave) {
+	public Portfolio(User user, String pfName, int pfTemplate, Boolean pfGrass, Boolean pfStar, String pfUuid,
+		Boolean pfTmpSave) {
 		this.user = user;
 		this.pfName = pfName;
 		this.pfTemplate = pfTemplate;
