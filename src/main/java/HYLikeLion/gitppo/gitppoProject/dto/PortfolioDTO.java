@@ -16,13 +16,11 @@ public class PortfolioDTO {
 	@Getter
 	public static class AddPortfolio {
 		private String pfName;
-		private Boolean pfGrass;
 		private Boolean pfStar;
 
 		@Builder
-		public AddPortfolio(String pfName, Boolean pfGrass, Boolean pfStar) {
+		public AddPortfolio(String pfName, Boolean pfStar) {
 			this.pfName = pfName;
-			this.pfGrass = pfGrass;
 			this.pfStar = pfStar;
 		}
 
@@ -30,7 +28,6 @@ public class PortfolioDTO {
 			return Portfolio.builder()
 				.pfName(pfName)
 				.pfTemplate(0)
-				.pfGrass(pfGrass)
 				.pfStar(pfStar)
 				.pfUuid(UUID.randomUUID().toString())
 				.pfTmpSave(true)
@@ -45,25 +42,23 @@ public class PortfolioDTO {
 		private Long usrId;
 		private String pfName;
 		private int pfTemplate;
-		private Boolean pfGrass;
 		private Boolean pfStar;
 		private String pfUuid;
 		private Boolean pfTmpSave;
 
 		@Builder
-		public GetPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfGrass, Boolean pfStar, String pfUuid, Boolean pfTmpSave) {
+		public GetPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfStar, String pfUuid, Boolean pfTmpSave) {
 			this.id = id;
 			this.usrId = usrId;
 			this.pfName = pfName;
 			this.pfTemplate = pfTemplate;
-			this.pfGrass = pfGrass;
 			this.pfStar = pfStar;
 			this.pfUuid = pfUuid;
 			this.pfTmpSave = pfTmpSave;
 		}
 
 		public static GetPortfolio from(Portfolio p) {
-			return new GetPortfolio(p.getId(), p.getUser().getId(), p.getPfName(), p.getPfTemplate(), p.getPfGrass(), p.getPfStar(), p.getPfUuid(), p.getPfTmpSave());
+			return new GetPortfolio(p.getId(), p.getUser().getId(), p.getPfName(), p.getPfTemplate(), p.getPfStar(), p.getPfUuid(), p.getPfTmpSave());
 		}
 	}
 
@@ -102,7 +97,6 @@ public class PortfolioDTO {
 		private Long usrId;
 		private String pfName;
 		private int pfTemplate;
-		private Boolean pfGrass;
 		private Boolean pfStar;
 		private String pfUuid;
 		private Boolean pfTmpSave;
@@ -110,12 +104,11 @@ public class PortfolioDTO {
 		private List<Repo> repo;
 
 		@Builder
-		public GetAllPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfGrass, Boolean pfStar, String pfUuid, Boolean pfTmpSave, Personal personal, List<Repo> repo) {
+		public GetAllPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfStar, String pfUuid, Boolean pfTmpSave, Personal personal, List<Repo> repo) {
 			this.id = id;
 			this.usrId = usrId;
 			this.pfName = pfName;
 			this.pfTmpSave = pfTmpSave;
-			this.pfGrass = pfGrass;
 			this.pfStar = pfStar;
 			this.pfUuid = pfUuid;
 			this.pfTemplate = pfTemplate;

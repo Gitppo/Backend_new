@@ -44,9 +44,6 @@ public class Portfolio extends BaseTimeEntity {
 	private int pfTemplate;
 
 	@Column(nullable = false, columnDefinition = "tinyint default 1")
-	private Boolean pfGrass;
-
-	@Column(nullable = false, columnDefinition = "tinyint default 1")
 	private Boolean pfStar;
 
 	@Column(nullable = false)
@@ -63,11 +60,10 @@ public class Portfolio extends BaseTimeEntity {
 	private List<Repo> repo = new ArrayList<>();
 
 	@Builder
-	public Portfolio(User user, String pfName, int pfTemplate, Boolean pfGrass, Boolean pfStar, String pfUuid, Boolean pfTmpSave) {
+	public Portfolio(User user, String pfName, int pfTemplate, Boolean pfStar, String pfUuid, Boolean pfTmpSave) {
 		this.user = user;
 		this.pfName = pfName;
 		this.pfTemplate = pfTemplate;
-		this.pfGrass = pfGrass;
 		this.pfStar = pfStar;
 		this.pfUuid = pfUuid;
 		this.pfTmpSave = pfTmpSave;

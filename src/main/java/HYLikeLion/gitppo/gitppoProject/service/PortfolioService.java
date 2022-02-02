@@ -51,7 +51,6 @@ public class PortfolioService {
 			.usrId(portfolio.getUser().getId())
 			.pfName(portfolio.getPfName())
 			.pfTmpSave(portfolio.getPfTmpSave())
-			.pfGrass(portfolio.getPfGrass())
 			.pfStar(portfolio.getPfStar())
 			.pfUuid(portfolio.getPfUuid())
 			.pfTemplate(portfolio.getPfTemplate())

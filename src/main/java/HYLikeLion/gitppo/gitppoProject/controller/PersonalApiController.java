@@ -58,7 +58,6 @@ public class PersonalApiController {
 			.build();
 
 		return new ResponseEntity<>(response, header, HttpStatus.OK);
-
 	}
 
 	// personal 삭제
@@ -76,5 +75,4 @@ public class PersonalApiController {
 
 		return new ResponseEntity<>(response, header, HttpStatus.OK);
 	}
-
 }
