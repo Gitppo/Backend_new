@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Builder
-@Setter
 @Getter
 public class Personal {
 	@Id
@@ -30,9 +30,9 @@ public class Personal {
 	@Column(name = "PERSONAL_ID")
 	private Long id;
 
-	// @OneToOne
-	// @JoinColumn(name = "PORTFOLIO_ID")
-	// private Portfolio portfolio;
+	@OneToOne
+	@JoinColumn(name = "PORTFOLIO_ID")
+	private Portfolio portfolio;
 
 	@OneToOne(orphanRemoval = true)
 	@JoinColumn(name = "INTRO_ID")

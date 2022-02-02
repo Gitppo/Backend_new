@@ -29,7 +29,7 @@ public class PersonalDTO {
 		public Personal toEntity() {
 			return Personal.builder()
 				.id(id)
-				// .portfolio(portfolio)
+				.portfolio(portfolio)
 				.introduction(introduction)
 				.basicInfo(basicInfo)
 				.careers(careers)
