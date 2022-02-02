@@ -11,9 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -24,6 +24,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
+@Schema(description = "자격증")
 public class License {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,15 +32,19 @@ public class License {
 	private Long id;
 
 	@NonNull
+	@Schema(description = "이름")
 	private String licName;
 
 	@NonNull
+	@Schema(description = "취득일")
 	private LocalDate licDate;
 
 	@NonNull
+	@Schema(description = "발급기관")
 	private String licOrganization;
 
 	@NonNull
+	@Schema(description = "등급레벨급수")
 	private String licLevel;
 
 	@ManyToOne(cascade = CascadeType.ALL)

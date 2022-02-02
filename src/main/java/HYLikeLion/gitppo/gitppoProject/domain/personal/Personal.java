@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,9 +30,9 @@ public class Personal {
 	@Column(name = "PERSONAL_ID")
 	private Long id;
 
-	@OneToOne(mappedBy = "personal", orphanRemoval = true)
-	@Getter(AccessLevel.NONE)
-	private Portfolio portfolio;
+	// @OneToOne
+	// @JoinColumn(name = "PORTFOLIO_ID")
+	// private Portfolio portfolio;
 
 	@OneToOne(orphanRemoval = true)
 	@JoinColumn(name = "INTRO_ID")

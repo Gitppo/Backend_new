@@ -2,10 +2,16 @@ package HYLikeLion.gitppo.gitppoProject.controller;
 
 import java.util.List;
 
+import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.domain.term.Term;
 import HYLikeLion.gitppo.gitppoProject.domain.term.TermAgreement;
 import HYLikeLion.gitppo.gitppoProject.dto.TermDTO;
 import HYLikeLion.gitppo.gitppoProject.service.TermService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +31,10 @@ public class TermApiController {
 
 	private final TermService termService;
 
+	@Operation(summary = "약관 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "약관 조회 완료", content = @Content(schema = @Schema(implementation = TermDTO.GetResult.class))),
+	})
 	@GetMapping("/term")
 	public ResponseEntity<TermDTO.GetResult> getTerms() throws NotFoundException {
 		List<Term> terms = termService.findTerms();
@@ -32,12 +42,16 @@ public class TermApiController {
 
 		TermDTO.GetResult dto = TermDTO.GetResult.builder()
 			.data(terms)
-			.message("OK")
+			.message("약관 조회 완료")
 			.build();
 
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "약관 동의 저장")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "약관 동의 저장 완료"),
+	})
 	@PostMapping("/term")
 	public ResponseEntity<Boolean> saveAgreements(@RequestBody List<TermDTO.Post> agreements)
 		throws Exception {

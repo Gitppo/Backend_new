@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Schema(description = "이용 약관 내용")
 public class TermContent {
 
 	@Id
@@ -26,10 +28,12 @@ public class TermContent {
 
 	@NonNull
 	@Getter
+	@Schema(description = "약관 제목")
 	private String title;
 
 	@NonNull
 	@Getter
+	@Schema(description = "약관 내용")
 	private String contents;
 
 	@NonNull
