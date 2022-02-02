@@ -31,6 +31,8 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+    implementation 'mysql:mysql-connector-java'
 }
 
 test {
