@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import HYLikeLion.gitppo.gitppoProject.domain.repo.RepoGroup;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -35,7 +35,7 @@ public class Portfolio extends BaseTimeEntity {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name="USR_ID")
+	@JoinColumn(name="ID")
 	private User user;
 
 	@Column(nullable = false)

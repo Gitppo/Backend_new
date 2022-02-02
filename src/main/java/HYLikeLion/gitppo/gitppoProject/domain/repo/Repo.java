@@ -34,10 +34,6 @@ public class Repo extends BaseTimeEntity {
 	@Getter(AccessLevel.NONE)
 	private Portfolio portfolio;
 
-	@ManyToOne
-	@JoinColumn(name="RP_GP_ID")
-	private RepoGroup repoGroup;
-
 	@Column(nullable = false)
 	private String rpName;
 
@@ -62,9 +58,8 @@ public class Repo extends BaseTimeEntity {
 	private String rpLongContents;
 
 	@Builder
-	public Repo(Portfolio portfolio, RepoGroup repoGroup, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
+	public Repo(Portfolio portfolio, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
 		this.portfolio = portfolio;
-		this.repoGroup = repoGroup;
 		this.rpName = rpName;
 		this.rpShortContents = rpShortContents;
 		this.rpReadme = rpReadme;
@@ -75,7 +70,7 @@ public class Repo extends BaseTimeEntity {
 		this.rpLongContents = rpLongContents;
 	}
 
-	public void update(String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, RepoGroup repoGroup) {
+	public void update(String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
 		this.rpName = rpName;
 		this.rpShortContents = rpShortContents;
 		this.rpReadme = rpReadme;
@@ -84,6 +79,5 @@ public class Repo extends BaseTimeEntity {
 		this.rpEdate = rpEdate;
 		this.rpRole = rpRole;
 		this.rpLongContents = rpLongContents;
-		this.repoGroup = repoGroup;
 	}
 }

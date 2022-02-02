@@ -19,10 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Branch;
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
-import HYLikeLion.gitppo.gitppoProject.domain.repo.RepoGroup;
 import HYLikeLion.gitppo.gitppoProject.dto.RepoDTO;
 import HYLikeLion.gitppo.gitppoProject.repository.Portfolio.PortfolioRepository;
-import HYLikeLion.gitppo.gitppoProject.repository.Repo.RepoGroupRepository;
 import HYLikeLion.gitppo.gitppoProject.repository.Repo.RepoRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +30,6 @@ public class RepoService {
 
 	private final RepoRepository repoRepository;
 	private final PortfolioRepository portfolioRepository;
-	private final RepoGroupRepository repoGroupRepository;
 
 	@Transactional
 	public List<RepoDTO.RequestRepo> getRepository(String token, String name) throws Exception {
@@ -107,9 +104,6 @@ public class RepoService {
 		Portfolio portfolio = portfolioRepository.findById(data.getPfId())
 			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + data.getPfId()));
 
-		RepoGroup repoGroup = repoGroupRepository.findById(data.getRpGpId())
-			.orElseGet(() -> { return null; });
-
 		Repo repo = Repo.builder()
 			.portfolio(portfolio)
 			.rpName(data.getRpName())
@@ -120,7 +114,6 @@ public class RepoService {
 			.rpEdate(data.getRpEdate())
 			.rpRole(data.getRpRole())
 			.rpLongContents(data.getRpLongContents())
-			.repoGroup(repoGroup)
 			.build();
 
 		return repoRepository.save(repo).getId();
@@ -131,21 +124,8 @@ public class RepoService {
 		Repo repo = repoRepository.findById(data.getId())
 			.orElseThrow(() -> new IllegalArgumentException("해당 레포가 존재하지 않습니다. id=" + data.getId()));
 
-		repo.update(data.getRpName(), data.getRpShortContents(), data.getRpReadme(), data.getRpStar(), data.getRpSdate(), data.getRpEdate(), data.getRpRole(), data.getRpLongContents(), repoGroupRepository.getById(data.getRpGpId()));
+		repo.update(data.getRpName(), data.getRpShortContents(), data.getRpReadme(), data.getRpStar(), data.getRpSdate(), data.getRpEdate(), data.getRpRole(), data.getRpLongContents());
 
 		return data.getId();
-	}
-
-	@Transactional
-	public Long addRepoGroup(RepoDTO.AddRepoGroup data) {
-		Portfolio portfolio = portfolioRepository.findById(data.getPfId())
-			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + data.getPfId()));
-
-		RepoGroup repoGroup = RepoGroup.builder()
-			.portfolio(portfolio)
-			.gpName(data.getGpName())
-			.build();
-
-		return repoGroupRepository.save(repoGroup).getId();
 	}
 }

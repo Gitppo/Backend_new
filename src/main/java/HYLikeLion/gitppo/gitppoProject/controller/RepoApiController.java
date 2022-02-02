@@ -88,22 +88,4 @@ public class RepoApiController {
 
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
-
-	@PostMapping("/group")
-	public ResponseEntity<RepoDTO.ResponseIds> addRepoGroup(@RequestBody List<RepoDTO.AddRepoGroup> body, @LoginUser SessionUser user) {
-		List<Long> ids = new ArrayList<>();
-
-		for (RepoDTO.AddRepoGroup data : body) {
-			ids.add(repoService.addRepoGroup(data));
-		}
-
-		RepoDTO.ResponseIds dto = RepoDTO.ResponseIds.builder()
-			.status(StatusEnum.OK)
-			.data(ids)
-			.message("그룹 추가 완료")
-			.build();
-		HttpHeaders header = new HttpHeaders();
-
-		return new ResponseEntity<>(dto, header, HttpStatus.OK);
-	}
 }
