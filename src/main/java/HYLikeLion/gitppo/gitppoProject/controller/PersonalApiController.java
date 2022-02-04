@@ -33,11 +33,11 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/test/")
+@RequestMapping("/api/")
 public class PersonalApiController {
 	private final PersonalService personalService;
 
-	@Operation(summary = "개인정보 보회")
+	@Operation(summary = "개인정보 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "개인 정보 조회 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
 	})
