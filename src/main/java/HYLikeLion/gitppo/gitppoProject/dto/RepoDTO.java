@@ -71,9 +71,10 @@ public class RepoDTO {
 		private LocalDate rpEdate;
 		private String rpRole;
 		private String rpLongContents;
+		private Long rpGpId;
 
 		@Builder
-		public AddRepo(Long pfId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
+		public AddRepo(Long pfId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, Long rpGpId) {
 			this.pfId = pfId;
 			this.rpName = rpName;
 			this.rpShortContents = rpShortContents;
@@ -83,6 +84,7 @@ public class RepoDTO {
 			this.rpEdate = rpEdate;
 			this.rpRole = rpRole;
 			this.rpLongContents = rpLongContents;
+			this.rpGpId = rpGpId;
 		}
 	}
 
@@ -98,6 +100,48 @@ public class RepoDTO {
 			this.status = status;
 			this.message = message;
 			this.data = data;
+		}
+	}
+
+	@NoArgsConstructor
+	@Getter
+	public static class EditRepo {
+		private Long id;
+		private String rpName;
+		private String rpShortContents;
+		private String rpReadme;
+		private Long rpStar;
+		private LocalDate rpSdate;
+		private LocalDate rpEdate;
+		private String rpRole;
+		private String rpLongContents;
+		private Long rpGpId;
+
+		@Builder
+		public EditRepo(Long id, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, Long rpGpId) {
+			this.id = id;
+			this.rpName = rpName;
+			this.rpShortContents = rpShortContents;
+			this.rpReadme = rpReadme;
+			this.rpStar = rpStar;
+			this.rpSdate = rpSdate;
+			this.rpEdate = rpEdate;
+			this.rpRole = rpRole;
+			this.rpLongContents = rpLongContents;
+			this.rpGpId = rpGpId;
+		}
+	}
+
+	@NoArgsConstructor
+	@Getter
+	public static class AddRepoGroup {
+		private Long pfId;
+		private String gpName;
+
+		@Builder
+		public AddRepoGroup(Long pfId, String gpName) {
+			this.pfId = pfId;
+			this.gpName = gpName;
 		}
 	}
 

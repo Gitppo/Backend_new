@@ -4,6 +4,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.sampled.Port;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Branch;
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
 import HYLikeLion.gitppo.gitppoProject.dto.RepoDTO;
@@ -98,8 +101,11 @@ public class RepoService {
 
 	@Transactional
 	public Long addRepos(RepoDTO.AddRepo data) {
+		Portfolio portfolio = portfolioRepository.findById(data.getPfId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + data.getPfId()));
+
 		Repo repo = Repo.builder()
-			.portfolio(portfolioRepository.getById(data.getPfId()))
+			.portfolio(portfolio)
 			.rpName(data.getRpName())
 			.rpShortContents(data.getRpShortContents())
 			.rpReadme(data.getRpReadme())
@@ -111,5 +117,15 @@ public class RepoService {
 			.build();
 
 		return repoRepository.save(repo).getId();
+	}
+
+	@Transactional
+	public Long editRepo(RepoDTO.EditRepo data) {
+		Repo repo = repoRepository.findById(data.getId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 레포가 존재하지 않습니다. id=" + data.getId()));
+
+		repo.update(data.getRpName(), data.getRpShortContents(), data.getRpReadme(), data.getRpStar(), data.getRpSdate(), data.getRpEdate(), data.getRpRole(), data.getRpLongContents());
+
+		return data.getId();
 	}
 }
