@@ -13,5 +13,5 @@ import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 
 public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
 	List<Portfolio> findByUser(@Param("user") User user);
-	Optional<Portfolio> findByPfUuid(@Param("pfUuid") String pfUuid);
+	Portfolio findByPfUuid(String uuid);
 }

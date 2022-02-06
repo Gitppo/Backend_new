@@ -17,10 +17,13 @@ import HYLikeLion.gitppo.gitppoProject.config.auth.LoginUser;
 import HYLikeLion.gitppo.gitppoProject.config.auth.dto.SessionUser;
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import HYLikeLion.gitppo.gitppoProject.dto.PersonalDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.ResponseDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.StatusEnum;
 import HYLikeLion.gitppo.gitppoProject.service.PersonalService;
+import HYLikeLion.gitppo.gitppoProject.service.PortfolioService;
+import HYLikeLion.gitppo.gitppoProject.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -33,11 +36,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/test/")
+@RequestMapping("/api/")
 public class PersonalApiController {
 	private final PersonalService personalService;
+	private final PortfolioService portfolioService;
 
-	@Operation(summary = "개인정보 보회")
+	@Operation(summary = "개인정보 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "개인 정보 조회 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
 	})

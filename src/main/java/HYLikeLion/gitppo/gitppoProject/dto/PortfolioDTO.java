@@ -3,6 +3,8 @@ package HYLikeLion.gitppo.gitppoProject.dto;
 import java.util.List;
 import java.util.UUID;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
@@ -31,6 +33,7 @@ public class PortfolioDTO {
 				.pfStar(pfStar)
 				.pfUuid(UUID.randomUUID().toString())
 				.pfTmpSave(true)
+				.pfShare(false)
 				.build();
 		}
 	}
@@ -60,9 +63,11 @@ public class PortfolioDTO {
 		private Boolean pfStar;
 		private String pfUuid;
 		private Boolean pfTmpSave;
+		private Boolean pfShare;
 
 		@Builder
-		public GetPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfStar, String pfUuid, Boolean pfTmpSave) {
+		public GetPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfStar, String pfUuid,
+			Boolean pfTmpSave, Boolean pfShare) {
 			this.id = id;
 			this.usrId = usrId;
 			this.pfName = pfName;
@@ -70,10 +75,12 @@ public class PortfolioDTO {
 			this.pfStar = pfStar;
 			this.pfUuid = pfUuid;
 			this.pfTmpSave = pfTmpSave;
+			this.pfShare = pfShare;
 		}
 
 		public static GetPortfolio from(Portfolio p) {
-			return new GetPortfolio(p.getId(), p.getUser().getId(), p.getPfName(), p.getPfTemplate(), p.getPfStar(), p.getPfUuid(), p.getPfTmpSave());
+			return new GetPortfolio(p.getId(), p.getUser().getId(), p.getPfName(), p.getPfTemplate(), p.getPfStar(),
+				p.getPfUuid(), p.getPfTmpSave(), p.getPfShare());
 		}
 	}
 
@@ -97,11 +104,13 @@ public class PortfolioDTO {
 	public static class SavePortfolio {
 		private Long pfId;
 		private int pfTemplate;
+		private Boolean pfShare;
 
 		@Builder
-		public SavePortfolio(Long pfId, int pfTemplate) {
+		public SavePortfolio(Long pfId, int pfTemplate, Boolean pfShare) {
 			this.pfId = pfId;
 			this.pfTemplate = pfTemplate;
+			this.pfShare = pfShare;
 		}
 	}
 
@@ -117,9 +126,11 @@ public class PortfolioDTO {
 		private Boolean pfTmpSave;
 		private Personal personal;
 		private List<Repo> repo;
+		private Boolean pfShare;
 
 		@Builder
-		public GetAllPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfStar, String pfUuid, Boolean pfTmpSave, Personal personal, List<Repo> repo) {
+		public GetAllPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfStar, String pfUuid,
+			Boolean pfTmpSave, Personal personal, List<Repo> repo, Boolean pfShare) {
 			this.id = id;
 			this.usrId = usrId;
 			this.pfName = pfName;
@@ -129,6 +140,7 @@ public class PortfolioDTO {
 			this.pfTemplate = pfTemplate;
 			this.personal = personal;
 			this.repo = repo;
+			this.pfShare = pfShare;
 		}
 	}
 

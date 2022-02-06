@@ -31,7 +31,7 @@ public class Personal {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "PORTFOLIO_ID")
+	@JoinColumn(name = "PF_ID")
 	private Portfolio portfolio;
 
 	@OneToOne(orphanRemoval = true)

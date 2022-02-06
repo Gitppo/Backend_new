@@ -140,26 +140,33 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
-	@Operation(summary = "포트폴리오 uuid로 조회")
+	@Operation(summary = "공유된 포트폴리오 조회")
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = Portfolio.class))),
+		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseList.class))),
 	})
-	@GetMapping("/uuid")
-	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getAllPortfolioByUuid(
-		@Parameter(description = "Portfolio Uuid", required = true, example = "550e8400-e29b-41d4-a716-446655440000")
-		@Param("pfUuid") String pfUuid) {
-		PortfolioDTO.GetAllPortfolio portfolio = portfolioService.findByUuid(pfUuid);
+	@GetMapping("/lookup")
+	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getPortfolio(@RequestParam String uuid) {
+		PortfolioDTO.GetAllPortfolio portfolio = portfolioService.findByUuid(uuid);
 		HttpHeaders header = new HttpHeaders();
 
-		PortfolioDTO.ResponsePortfolio dto = PortfolioDTO.ResponsePortfolio.builder()
+		PortfolioDTO.ResponsePortfolio result;
+
+		if (portfolio == null || !portfolio.getPfShare()) {
+			result = PortfolioDTO.ResponsePortfolio.builder()
+				.status(StatusEnum.NOT_FOUND)
+				.data(null)
+				.message("포트폴리오 조회 실패")
+				.build();
+			return new ResponseEntity<>(result, header, HttpStatus.NOT_FOUND);
+		}
+
+		result = PortfolioDTO.ResponsePortfolio.builder()
 			.status(StatusEnum.OK)
 			.data(portfolio)
-			.message("포트폴리오 조회 완료 uuid=" + pfUuid)
+			.message("포트폴리오 조회 완료")
 			.build();
-
-		return new ResponseEntity<>(dto, header, HttpStatus.OK);
-	}
-
+		return new ResponseEntity<>(result, header, HttpStatus.OK);
+  
 	@Operation(summary = "포트폴리오 삭제")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "포트폴리오 삭제 완료"),

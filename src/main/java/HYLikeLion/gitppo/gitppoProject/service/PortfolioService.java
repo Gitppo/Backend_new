@@ -47,13 +47,14 @@ public class PortfolioService {
 		Portfolio portfolio = portfolioRepository.findById(data.getPfId())
 			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + data.getPfId()));
 
-		portfolio.saveCompletely(data.getPfTemplate(), false);
+		portfolio.saveCompletely(data.getPfTemplate(), false, data.getPfShare());
 
 		return data.getPfId();
 	}
 
 	@Transactional
 	public PortfolioDTO.GetAllPortfolio findById(Long id) {
+		System.out.println(id);
 		Portfolio portfolio = portfolioRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + id));
 
@@ -67,6 +68,25 @@ public class PortfolioService {
 			.pfTemplate(portfolio.getPfTemplate())
 			.personal(portfolio.getPersonal())
 			.repo(portfolio.getRepo())
+			.pfShare(portfolio.getPfShare())
+			.build();
+	}
+
+	@Transactional
+	public PortfolioDTO.GetAllPortfolio findByUuid(String uuid) {
+		Portfolio portfolio = portfolioRepository.findByPfUuid(uuid);
+
+		return PortfolioDTO.GetAllPortfolio.builder()
+			.id(portfolio.getId())
+			.usrId(portfolio.getUser().getId())
+			.pfName(portfolio.getPfName())
+			.pfTmpSave(portfolio.getPfTmpSave())
+			.pfStar(portfolio.getPfStar())
+			.pfUuid(portfolio.getPfUuid())
+			.pfTemplate(portfolio.getPfTemplate())
+			.personal(portfolio.getPersonal())
+			.repo(portfolio.getRepo())
+			.pfShare(portfolio.getPfShare())
 			.build();
 	}
 

@@ -5,8 +5,10 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
+import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import HYLikeLion.gitppo.gitppoProject.dto.PersonalDTO;
 import HYLikeLion.gitppo.gitppoProject.repository.Personal.*;
+import HYLikeLion.gitppo.gitppoProject.repository.Portfolio.PortfolioRepository;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -25,12 +27,17 @@ public class PersonalService {
 	private final SnsRepository snsRepository;
 	private final LicenseRepository licenseRepository;
 
+	private final PortfolioRepository portfolioRepository;
+
 	@Transactional
 	public Personal savePersonal(PersonalDTO.AddPersonal tmp) {
 		// TO-DO: 검증 절차 추가해야될 것 같음.
 		// TO-DO: 포트폴리오 연결 추가
 
-		Personal personal = personalRepository.save(tmp.toEntity());
+		Portfolio portfolio = portfolioRepository.findById(tmp.getPfId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + tmp.getPfId()));
+
+		Personal personal = personalRepository.save(tmp.toEntity(portfolio));
 
 		introductionRepository.save(tmp.getIntroduction());
 		basicInfoRepository.save(tmp.getBasicInfo());
