@@ -84,4 +84,9 @@ public class Portfolio extends BaseTimeEntity {
 		this.pfTemplate = pfTemplate;
 		this.pfTmpSave = pfTmpSave;
 	}
+
+	public void update(String pfName, Boolean pfStar) {
+		this.pfName = pfName;
+		this.pfStar = pfStar;
+	}
 }

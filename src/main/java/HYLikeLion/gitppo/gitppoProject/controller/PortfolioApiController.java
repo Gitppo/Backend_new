@@ -1,20 +1,19 @@
 package HYLikeLion.gitppo.gitppoProject.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import javax.sound.sampled.Port;
 
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import HYLikeLion.gitppo.gitppoProject.config.auth.LoginUser;
@@ -25,9 +24,9 @@ import HYLikeLion.gitppo.gitppoProject.dto.RepoDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.ResponseDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.StatusEnum;
 import HYLikeLion.gitppo.gitppoProject.service.PortfolioService;
-import HYLikeLion.gitppo.gitppoProject.service.RepoService;
 import HYLikeLion.gitppo.gitppoProject.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -67,7 +66,7 @@ public class PortfolioApiController {
 
 	@Operation(summary = "포트폴리오 추가")
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "레포지토리 추가 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseId.class))),
+		@ApiResponse(responseCode = "200", description = "포트폴리오 추가 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseId.class))),
 	})
 	@PostMapping("")
 	public ResponseEntity<ResponseDTO.ResponseId> addPortfolio(@RequestBody PortfolioDTO.AddPortfolio requestDTO,
@@ -84,7 +83,26 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
-	@Operation(summary = "포트폴리오 저장")
+	@Operation(summary = "포트폴리오 제목, 스타 여부 수정")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "포트폴리오 수정 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseId.class))),
+	})
+	@PutMapping("")
+	public ResponseEntity<ResponseDTO.ResponseId> editPortfolio(@RequestBody PortfolioDTO.EditPortfolio requestDTO,
+		@LoginUser SessionUser user) {
+		Long id = portfolioService.editPortfolio(requestDTO);
+		HttpHeaders header = new HttpHeaders();
+
+		ResponseDTO.ResponseId dto = ResponseDTO.ResponseId.builder()
+			.status(StatusEnum.OK)
+			.id(id)
+			.message("포트폴리오 수정 완료")
+			.build();
+
+		return new ResponseEntity<>(dto, header, HttpStatus.OK);
+	}
+
+	@Operation(summary = "포트폴리오 임시저장 -> 저장 & 템플릿 저장")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "포트폴리오 저장 및 템플릿 저장 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseId.class))),
 	})
@@ -103,7 +121,7 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
-	@Operation(summary = "포트폴리오 id 조회")
+	@Operation(summary = "포트폴리오 id로 조회")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = Portfolio.class))),
 	})
@@ -122,4 +140,44 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "포트폴리오 uuid로 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = Portfolio.class))),
+	})
+	@GetMapping("/uuid")
+	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getAllPortfolioByUuid(
+		@Parameter(description = "Portfolio Uuid", required = true, example = "550e8400-e29b-41d4-a716-446655440000")
+		@Param("pfUuid") String pfUuid) {
+		PortfolioDTO.GetAllPortfolio portfolio = portfolioService.findByUuid(pfUuid);
+		HttpHeaders header = new HttpHeaders();
+
+		PortfolioDTO.ResponsePortfolio dto = PortfolioDTO.ResponsePortfolio.builder()
+			.status(StatusEnum.OK)
+			.data(portfolio)
+			.message("포트폴리오 조회 완료 uuid=" + pfUuid)
+			.build();
+
+		return new ResponseEntity<>(dto, header, HttpStatus.OK);
+	}
+
+	@Operation(summary = "포트폴리오 삭제")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "포트폴리오 삭제 완료"),
+	})
+	@DeleteMapping("")
+	public ResponseEntity<ResponseDTO.ResponseId> deletePortfolio(
+		@Parameter(description = "Portfolio id", required = true, example = "1")
+		@RequestParam Long id) {
+		portfolioService.deletePortfolio(id);
+
+		HttpHeaders header = new HttpHeaders();
+
+		ResponseDTO.ResponseId response = ResponseDTO.ResponseId.builder()
+			.status(StatusEnum.OK)
+			.id(id)
+			.message("포트폴리오 삭제 완료")
+			.build();
+
+		return new ResponseEntity<>(response, header, HttpStatus.OK);
+	}
 }
