@@ -33,8 +33,19 @@ public class PortfolioService {
 	}
 
 	@Transactional
+	public Long editPortfolio(PortfolioDTO.EditPortfolio data) {
+		Portfolio portfolio = portfolioRepository.findById(data.getId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + data.getId()));
+
+		portfolio.update(data.getPfName(), data.getPfStar());
+
+		return data.getId();
+	}
+
+	@Transactional
 	public Long saveCompletely(PortfolioDTO.SavePortfolio data) {
-		Portfolio portfolio = portfolioRepository.getById(data.getPfId());
+		Portfolio portfolio = portfolioRepository.findById(data.getPfId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + data.getPfId()));
 
 		portfolio.saveCompletely(data.getPfTemplate(), false, data.getPfShare());
 
@@ -45,7 +56,7 @@ public class PortfolioService {
 	public PortfolioDTO.GetAllPortfolio findById(Long id) {
 		System.out.println(id);
 		Portfolio portfolio = portfolioRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. ㅑㅇ=" + id));
+			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + id));
 
 		return PortfolioDTO.GetAllPortfolio.builder()
 			.id(portfolio.getId())
@@ -77,5 +88,28 @@ public class PortfolioService {
 			.repo(portfolio.getRepo())
 			.pfShare(portfolio.getPfShare())
 			.build();
+	}
+
+	@Transactional
+	public PortfolioDTO.GetAllPortfolio findByUuid(String pfUuid) {
+		Portfolio portfolio = portfolioRepository.findByPfUuid(pfUuid)
+			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. uuid=" + pfUuid));
+
+		return PortfolioDTO.GetAllPortfolio.builder()
+			.id(portfolio.getId())
+			.usrId(portfolio.getUser().getId())
+			.pfName(portfolio.getPfName())
+			.pfTmpSave(portfolio.getPfTmpSave())
+			.pfStar(portfolio.getPfStar())
+			.pfUuid(portfolio.getPfUuid())
+			.pfTemplate(portfolio.getPfTemplate())
+			.personal(portfolio.getPersonal())
+			.repo(portfolio.getRepo())
+			.build();
+	}
+
+	@Transactional
+	public void deletePortfolio(Long id) {
+		portfolioRepository.deleteById(id);
 	}
 }

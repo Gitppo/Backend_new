@@ -40,6 +40,21 @@ public class PortfolioDTO {
 
 	@NoArgsConstructor
 	@Getter
+	public static class EditPortfolio {
+		private String pfName;
+		private Boolean pfStar;
+		private Long id;
+
+		@Builder
+		public EditPortfolio(String pfName, Boolean pfStar, Long id) {
+			this.pfName = pfName;
+			this.pfStar = pfStar;
+			this.id = id;
+		}
+	}
+
+	@NoArgsConstructor
+	@Getter
 	public static class GetPortfolio {
 		private Long id;
 		private Long usrId;
