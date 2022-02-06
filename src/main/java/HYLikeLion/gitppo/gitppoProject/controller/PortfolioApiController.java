@@ -166,6 +166,7 @@ public class PortfolioApiController {
 			.message("포트폴리오 조회 완료")
 			.build();
 		return new ResponseEntity<>(result, header, HttpStatus.OK);
+	}
   
 	@Operation(summary = "포트폴리오 삭제")
 	@ApiResponses({

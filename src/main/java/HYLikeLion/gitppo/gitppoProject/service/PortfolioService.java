@@ -91,24 +91,6 @@ public class PortfolioService {
 	}
 
 	@Transactional
-	public PortfolioDTO.GetAllPortfolio findByUuid(String pfUuid) {
-		Portfolio portfolio = portfolioRepository.findByPfUuid(pfUuid)
-			.orElseThrow(() -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. uuid=" + pfUuid));
-
-		return PortfolioDTO.GetAllPortfolio.builder()
-			.id(portfolio.getId())
-			.usrId(portfolio.getUser().getId())
-			.pfName(portfolio.getPfName())
-			.pfTmpSave(portfolio.getPfTmpSave())
-			.pfStar(portfolio.getPfStar())
-			.pfUuid(portfolio.getPfUuid())
-			.pfTemplate(portfolio.getPfTemplate())
-			.personal(portfolio.getPersonal())
-			.repo(portfolio.getRepo())
-			.build();
-	}
-
-	@Transactional
 	public void deletePortfolio(Long id) {
 		portfolioRepository.deleteById(id);
 	}
