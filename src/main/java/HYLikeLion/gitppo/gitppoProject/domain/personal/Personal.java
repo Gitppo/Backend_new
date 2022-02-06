@@ -30,9 +30,9 @@ public class Personal {
 	@Column(name = "PERSONAL_ID")
 	private Long id;
 
-	// @OneToOne
-	// @JoinColumn(name = "PF_ID")
-	// private Portfolio portfolio;
+	@OneToOne
+	@JoinColumn(name = "PF_ID")
+	private Portfolio portfolio;
 
 	@OneToOne(orphanRemoval = true)
 	@JoinColumn(name = "INTRO_ID")
