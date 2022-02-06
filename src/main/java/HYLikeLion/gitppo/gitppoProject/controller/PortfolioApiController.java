@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import HYLikeLion.gitppo.gitppoProject.config.auth.LoginUser;
@@ -122,4 +123,31 @@ public class PortfolioApiController {
 		return new ResponseEntity<>(dto, header, HttpStatus.OK);
 	}
 
+	@Operation(summary = "공유된 포트폴리오 조회")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseList.class))),
+	})
+	@GetMapping("/lookup")
+	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getPortfolio(@RequestParam String uuid) {
+		PortfolioDTO.GetAllPortfolio portfolio = portfolioService.findByUuid(uuid);
+		HttpHeaders header = new HttpHeaders();
+
+		PortfolioDTO.ResponsePortfolio result;
+
+		if (portfolio == null || !portfolio.getPfShare()) {
+			result = PortfolioDTO.ResponsePortfolio.builder()
+				.status(StatusEnum.NOT_FOUND)
+				.data(null)
+				.message("포트폴리오 조회 실패")
+				.build();
+			return new ResponseEntity<>(result, header, HttpStatus.NOT_FOUND);
+		}
+
+		result = PortfolioDTO.ResponsePortfolio.builder()
+			.status(StatusEnum.OK)
+			.data(portfolio)
+			.message("포트폴리오 조회 완료")
+			.build();
+		return new ResponseEntity<>(result, header, HttpStatus.OK);
+	}
 }

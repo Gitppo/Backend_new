@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.headers().frameOptions().disable().and()  // h2용도
 			.authorizeRequests()// url별 권한 설정.
 			.antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/login/**", "/test/**",
-				"/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
+				"/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs", "/api/portfolio/lookup/**").permitAll()
 			.antMatchers("/api/**").hasRole(Role.USER.name())
 			.anyRequest().authenticated()
 
