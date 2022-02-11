@@ -20,10 +20,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.csrf().disable()
 			.cors().configurationSource(corsConfigurationSource()) // cors 허용
-
 			.and()
+			.csrf().disable()
+
 			.headers().frameOptions().disable().and()  // h2용도
 			.authorizeRequests()// url별 권한 설정.
 			.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
