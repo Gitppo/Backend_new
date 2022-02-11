@@ -21,12 +21,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.cors().configurationSource(corsConfigurationSource()) // cors 허용
+
 			.and()
 			.csrf().disable()
-
 			.headers().frameOptions().disable().and()  // h2용도
 			.authorizeRequests()// url별 권한 설정.
-			.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 			.antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/login/**", "/test/**",
 				"/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs", "/api/portfolio/lookup/**").permitAll()
 			.antMatchers("/api/**").hasRole(Role.USER.name())
