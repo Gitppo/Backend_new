@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import HYLikeLion.gitppo.gitppoProject.config.auth.LoginUser;
@@ -41,16 +42,16 @@ public class RepoApiController {
 		@ApiResponse(responseCode = "200", description = "레포지토리 조회 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseList.class))),
 	})
 	@GetMapping("")
-	public ResponseEntity<RepoDTO.ResponseList> getRepository(@LoginUser SessionUser user) throws Exception {
+	public ResponseEntity<RepoDTO.ResponseList> getRepository(@RequestParam String githubUserName) throws Exception {
 
 		// get the repos
-		List<RepoDTO.RequestRepo> repos = repoService.getRepository(token, user.getName());
+		List<RepoDTO.RequestRepo> repos = repoService.getRepository(token, githubUserName);
 
 		// get languages of repos
-		List<RepoDTO.RequestRepo> repos2 = repoService.addLanguage(repos, token, user.getName());
+		List<RepoDTO.RequestRepo> repos2 = repoService.addLanguage(repos, token, githubUserName);
 
 		// get README.md of repos
-		List<RepoDTO.RequestRepo> repos3 = repoService.addReadme(repos2, token, user.getName());
+		List<RepoDTO.RequestRepo> repos3 = repoService.addReadme(repos2, token, githubUserName);
 
 		RepoDTO.ResponseList dto = RepoDTO.ResponseList.builder()
 			.status(StatusEnum.OK)
@@ -67,8 +68,7 @@ public class RepoApiController {
 		@ApiResponse(responseCode = "200", description = "레포지토리 저장 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseIds.class))),
 	})
 	@PostMapping("")
-	public ResponseEntity<RepoDTO.ResponseIds> addRepository(@RequestBody List<RepoDTO.AddRepo> body,
-		@LoginUser SessionUser user) {
+	public ResponseEntity<RepoDTO.ResponseIds> addRepository(@RequestBody List<RepoDTO.AddRepo> body) {
 		List<Long> ids = new ArrayList<>();
 
 		for (RepoDTO.AddRepo data : body) {
@@ -90,8 +90,7 @@ public class RepoApiController {
 		@ApiResponse(responseCode = "200", description = "레포지토리 수정 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseIds.class))),
 	})
 	@PutMapping("")
-	public ResponseEntity<RepoDTO.ResponseIds> editRepository(@RequestBody List<RepoDTO.EditRepo> body,
-		@LoginUser SessionUser user) {
+	public ResponseEntity<RepoDTO.ResponseIds> editRepository(@RequestBody List<RepoDTO.EditRepo> body) {
 		List<Long> ids = new ArrayList<>();
 
 		for (RepoDTO.EditRepo data : body) {
