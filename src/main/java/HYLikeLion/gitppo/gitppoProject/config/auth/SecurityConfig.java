@@ -25,30 +25,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 			.headers().frameOptions().disable().and()  // h2용도
 			.authorizeRequests()// url별 권한 설정.
-			.antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/login/**", "/test/**",
-				"/swagger-ui/**", "/swagger-resources/**", "/api/term", "/v3/api-docs", "/api/portfolio/lookup/**").permitAll()
-			.antMatchers("/api/**").hasRole(Role.USER.name())
+			// .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "/login/**", "/test/**",
+			// 	"/swagger-ui/**", "/swagger-resources/**", "/api/term", "/v3/api-docs", "/api/portfolio/lookup/**",
+			// 	"/auth/**").permitAll()
+			// .antMatchers("/api/**").hasRole(Role.USER.name())
+
+			.antMatchers("/auth/**", "/api/**").permitAll()
 			.anyRequest().authenticated().and()
 
 			.logout()
-			.logoutSuccessUrl("/").and()
+			.logoutSuccessUrl("/")
+			.and()
 
 			.oauth2Login()
 			.userInfoEndpoint()
 			.userService(customOAuth2UserService);   //로그인 이후 진행되는 서비스 파일.
 	}
-
-	// @Bean
-	// public CorsConfigurationSource corsConfigurationSource() {
-	// 	CorsConfiguration configuration = new CorsConfiguration();
-	//
-	// 	configuration.addAllowedOrigin("*");
-	// 	configuration.addAllowedHeader("*");
-	// 	configuration.addAllowedMethod("*");
-	// 	configuration.setAllowCredentials(true);
-	//
-	// 	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	// 	source.registerCorsConfiguration("/**", configuration);
-	// 	return source;
-	// }
 }
