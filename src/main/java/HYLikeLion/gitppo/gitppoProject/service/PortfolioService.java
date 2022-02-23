@@ -2,6 +2,7 @@ package HYLikeLion.gitppo.gitppoProject.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
 import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import HYLikeLion.gitppo.gitppoProject.dto.PortfolioDTO;
 import HYLikeLion.gitppo.gitppoProject.repository.Portfolio.PortfolioRepository;
+import HYLikeLion.gitppo.gitppoProject.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class PortfolioService {
 
 	private final PortfolioRepository portfolioRepository;
+	private final UserRepository userRepository;
 
 	@Transactional
 	public List<Portfolio> findByUser(User user) {
@@ -25,9 +28,19 @@ public class PortfolioService {
 	}
 
 	@Transactional
-	public Long save(User user, PortfolioDTO.AddPortfolio requestDTO) {
-		Portfolio portfolio = requestDTO.toEntity();
-		portfolio.setUser(user);
+	public Long save(PortfolioDTO.AddPortfolio requestDTO) {
+		User user = userRepository.findById(requestDTO.getUsrId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다. id=" + requestDTO.getUsrId()));
+
+		Portfolio portfolio = Portfolio.builder()
+			.user(user)
+			.pfTmpSave(true)
+			.pfShare(false)
+			.pfName(requestDTO.getPfName())
+			.pfTemplate(0)
+			.pfStar(requestDTO.getPfStar())
+			.pfUuid(UUID.randomUUID().toString())
+			.build();
 
 		return portfolioRepository.save(portfolio).getId();
 	}
