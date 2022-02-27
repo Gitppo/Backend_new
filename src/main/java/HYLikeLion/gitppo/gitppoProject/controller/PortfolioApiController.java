@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import HYLikeLion.gitppo.gitppoProject.config.auth.LoginUser;
-import HYLikeLion.gitppo.gitppoProject.config.auth.dto.SessionUser;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import HYLikeLion.gitppo.gitppoProject.dto.PortfolioDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.RepoDTO;
@@ -69,9 +67,8 @@ public class PortfolioApiController {
 		@ApiResponse(responseCode = "200", description = "포트폴리오 추가 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseId.class))),
 	})
 	@PostMapping("")
-	public ResponseEntity<ResponseDTO.ResponseId> addPortfolio(@RequestBody PortfolioDTO.AddPortfolio requestDTO,
-		@LoginUser SessionUser user) {
-		Long id = portfolioService.save(userService.findById(user.getId()), requestDTO);
+	public ResponseEntity<ResponseDTO.ResponseId> addPortfolio(@RequestBody PortfolioDTO.AddPortfolio requestDTO) {
+		Long id = portfolioService.save(requestDTO);
 		HttpHeaders header = new HttpHeaders();
 
 		ResponseDTO.ResponseId dto = ResponseDTO.ResponseId.builder()

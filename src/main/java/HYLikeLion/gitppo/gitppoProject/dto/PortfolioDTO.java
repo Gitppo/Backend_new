@@ -17,24 +17,15 @@ public class PortfolioDTO {
 	@NoArgsConstructor
 	@Getter
 	public static class AddPortfolio {
+		private Long usrId;
 		private String pfName;
 		private Boolean pfStar;
 
 		@Builder
-		public AddPortfolio(String pfName, Boolean pfStar) {
+		public AddPortfolio(Long usrId, String pfName, Boolean pfStar) {
+			this.usrId = usrId;
 			this.pfName = pfName;
 			this.pfStar = pfStar;
-		}
-
-		public Portfolio toEntity() {
-			return Portfolio.builder()
-				.pfName(pfName)
-				.pfTemplate(0)
-				.pfStar(pfStar)
-				.pfUuid(UUID.randomUUID().toString())
-				.pfTmpSave(true)
-				.pfShare(false)
-				.build();
 		}
 	}
 
