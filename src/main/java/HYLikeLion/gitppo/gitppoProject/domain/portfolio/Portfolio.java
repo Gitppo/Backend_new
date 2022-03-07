@@ -3,7 +3,6 @@ package HYLikeLion.gitppo.gitppoProject.domain.portfolio;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,15 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import HYLikeLion.gitppo.gitppoProject.domain.BaseTimeEntity;
-import HYLikeLion.gitppo.gitppoProject.domain.personal.Career;
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.domain.repo.Repo;
 import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
