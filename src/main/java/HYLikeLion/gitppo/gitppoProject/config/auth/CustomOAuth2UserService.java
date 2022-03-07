@@ -1,5 +1,6 @@
 package HYLikeLion.gitppo.gitppoProject.config.auth;
 
+import HYLikeLion.gitppo.gitppoProject.domain.user.Role;
 import java.time.LocalDate;
 import java.util.Collections;
 
@@ -49,7 +50,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 	private User saveOrUpdate(OAuthAttributes attributes) {
 		User authUser = userRepository.findByGithubId(attributes.getGithubId())
-			.map(entity -> entity.update(attributes.getName(), attributes.getEmail(), LocalDate.now()))
+			.map(entity -> entity.update(attributes.getName(), attributes.getEmail(), LocalDate.now(), Role.USER))
 			.orElse(attributes.toEntity());
 		;
 		return userRepository.save(authUser);  // user 값 저장.
