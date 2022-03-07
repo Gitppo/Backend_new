@@ -1,8 +1,13 @@
 package HYLikeLion.gitppo.gitppoProject.domain.repo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -71,8 +76,16 @@ public class Repo extends BaseTimeEntity {
 	@Schema(description = "긴 내용")
 	private String rpLongContents;
 
+	@ElementCollection
+	@Schema(description = "언어")
+	private Map<String, Long> rpLanguages = new HashMap<>();
+
+	@ElementCollection
+	@Schema(description = "스킬")
+	private List<String> rpSkills = new ArrayList<>();
+
 	@Builder
-	public Repo(Portfolio portfolio, Long repoGitId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
+	public Repo(Portfolio portfolio, Long repoGitId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, Map<String, Long> rpLanguages, List<String> rpSkills) {
 		this.portfolio = portfolio;
 		this.repoGitId = repoGitId;
 		this.rpName = rpName;
@@ -83,9 +96,11 @@ public class Repo extends BaseTimeEntity {
 		this.rpEdate = rpEdate;
 		this.rpRole = rpRole;
 		this.rpLongContents = rpLongContents;
+		this.rpLanguages = rpLanguages;
+		this.rpSkills = rpSkills;
 	}
 
-	public void update(String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
+	public void update(String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, Map<String, Long> rpLanguages, List<String> rpSkills) {
 		this.rpName = rpName;
 		this.rpShortContents = rpShortContents;
 		this.rpReadme = rpReadme;
@@ -94,5 +109,7 @@ public class Repo extends BaseTimeEntity {
 		this.rpEdate = rpEdate;
 		this.rpRole = rpRole;
 		this.rpLongContents = rpLongContents;
+		this.rpLanguages = rpLanguages;
+		this.rpSkills = rpSkills;
 	}
 }
