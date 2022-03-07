@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -77,11 +78,11 @@ public class Repo extends BaseTimeEntity {
 	private String rpLongContents;
 
 	@ElementCollection
-	@Schema(description = "언어")
+	@CollectionTable(name="언어")
 	private Map<String, Long> rpLanguages = new HashMap<>();
 
 	@ElementCollection
-	@Schema(description = "스킬")
+	@CollectionTable(name = "스킬")
 	private List<String> rpSkills = new ArrayList<>();
 
 	@Builder
