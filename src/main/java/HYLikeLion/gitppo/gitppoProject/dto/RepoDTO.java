@@ -119,7 +119,6 @@ public class RepoDTO {
 		private LocalDate rpEdate;
 		private String rpRole;
 		private String rpLongContents;
-		private Long rpGpId;
 		private Map<String, Long> rpLanguages;
 		private List<String> rpSkills;
 
@@ -134,7 +133,6 @@ public class RepoDTO {
 			this.rpEdate = rpEdate;
 			this.rpRole = rpRole;
 			this.rpLongContents = rpLongContents;
-			this.rpGpId = rpGpId;
 			this.rpLanguages = rpLanguages;
 			this.rpSkills = rpSkills;
 		}
