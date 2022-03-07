@@ -71,10 +71,9 @@ public class RepoDTO {
 		private LocalDate rpEdate;
 		private String rpRole;
 		private String rpLongContents;
-		private Long rpGpId;
 
 		@Builder
-		public AddRepo(Long pfId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, Long rpGpId) {
+		public AddRepo(Long pfId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
 			this.pfId = pfId;
 			this.rpName = rpName;
 			this.rpShortContents = rpShortContents;
@@ -84,7 +83,6 @@ public class RepoDTO {
 			this.rpEdate = rpEdate;
 			this.rpRole = rpRole;
 			this.rpLongContents = rpLongContents;
-			this.rpGpId = rpGpId;
 		}
 	}
 
