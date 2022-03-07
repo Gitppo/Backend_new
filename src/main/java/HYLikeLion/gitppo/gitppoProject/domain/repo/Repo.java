@@ -31,6 +31,10 @@ public class Repo extends BaseTimeEntity {
 	@Column(name = "RP_ID")
 	private Long id;
 
+	@Column(nullable = false)
+	@Schema(description = "레포 깃 아이디")
+	private Long repoGitId;
+
 	@ManyToOne
 	@JoinColumn(name = "PF_ID")
 	@Getter(AccessLevel.NONE)
@@ -68,8 +72,9 @@ public class Repo extends BaseTimeEntity {
 	private String rpLongContents;
 
 	@Builder
-	public Repo(Portfolio portfolio, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
+	public Repo(Portfolio portfolio, Long repoGitId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
 		this.portfolio = portfolio;
+		this.repoGitId = repoGitId;
 		this.rpName = rpName;
 		this.rpShortContents = rpShortContents;
 		this.rpReadme = rpReadme;

@@ -4,8 +4,6 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.sampled.Port;
-
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -106,6 +104,7 @@ public class RepoService {
 
 		Repo repo = Repo.builder()
 			.portfolio(portfolio)
+			.repoGitId(data.getRepoGitId())
 			.rpName(data.getRpName())
 			.rpShortContents(data.getRpShortContents())
 			.rpReadme(data.getRpReadme())

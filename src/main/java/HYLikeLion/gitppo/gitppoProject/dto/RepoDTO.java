@@ -63,6 +63,7 @@ public class RepoDTO {
 	@Getter
 	public static class AddRepo {
 		private Long pfId;
+		private Long repoGitId;
 		private String rpName;
 		private String rpShortContents;
 		private String rpReadme;
@@ -72,9 +73,11 @@ public class RepoDTO {
 		private String rpRole;
 		private String rpLongContents;
 
+
 		@Builder
-		public AddRepo(Long pfId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
+		public AddRepo(Long pfId, Long repoGitId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents) {
 			this.pfId = pfId;
+			this.repoGitId = repoGitId;
 			this.rpName = rpName;
 			this.rpShortContents = rpShortContents;
 			this.rpReadme = rpReadme;
