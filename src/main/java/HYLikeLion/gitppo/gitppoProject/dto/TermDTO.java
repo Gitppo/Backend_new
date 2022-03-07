@@ -10,32 +10,35 @@ import lombok.NoArgsConstructor;
 
 public class TermDTO {
 
-	@NoArgsConstructor
-	@Getter
-	public static class Post {
-		private Long termID;
-		//        private Long user_id;
-		private Boolean termAgreementIsAgree;
+    @NoArgsConstructor
+    @Getter
+    public static class Post {
 
-		@Builder
-		public Post(Long termID, Boolean termAgreementIsAgree) {
-			this.termID = termID;
-			this.termAgreementIsAgree = termAgreementIsAgree;
-		}
-	}
+        private Long termID;
+        private Long userID;
+        private Boolean termAgreementIsAgree;
 
-	@NoArgsConstructor
-	@Getter
-	public static class GetResult {
-		private String message;
-		private List<Term> data;
+        @Builder
+        public Post(Long termID, Boolean termAgreementIsAgree, Long userID) {
+            this.termID = termID;
+            this.termAgreementIsAgree = termAgreementIsAgree;
+            this.userID = userID;
+        }
+    }
 
-		@Builder
-		public GetResult(StatusEnum status, List<Term> data, String message) {
-			this.data = data;
-			this.message = message;
-		}
-	}
+    @NoArgsConstructor
+    @Getter
+    public static class GetResult {
+
+        private String message;
+        private List<Term> data;
+
+        @Builder
+        public GetResult(StatusEnum status, List<Term> data, String message) {
+            this.data = data;
+            this.message = message;
+        }
+    }
 
 }
 

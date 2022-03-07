@@ -60,10 +60,11 @@ public class User {
 		this.role = role;
 	}
 
-	public User update(String name, String email, LocalDate loginDate) {
+	public User update(String name, String email, LocalDate loginDate, Role role) {
 		this.name = name;
 		this.email = email;
 		this.loginDate = loginDate;
+		this.role = role;
 		return this;
 	}
 

@@ -44,7 +44,7 @@ public class PortfolioApiController {
 		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseList.class))),
 	})
 	@GetMapping("")
-	public ResponseEntity<PortfolioDTO.ResponseList> getPortfolio(@RequestParam Long id) {
+	public ResponseEntity<PortfolioDTO.ResponseList> getPortfolio(@Parameter(description = "User id", required = true, example = "1") @RequestParam Long id) {
 		List<Portfolio> portfolios = portfolioService.findByUser(userService.findById(id));
 		HttpHeaders header = new HttpHeaders();
 
@@ -119,10 +119,10 @@ public class PortfolioApiController {
 
 	@Operation(summary = "포트폴리오 id로 조회")
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = Portfolio.class))),
+		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = PortfolioDTO.ResponsePortfolio.class))),
 	})
 	@GetMapping("/all")
-	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getAllPortfolio(@Param("id") Long id) {
+	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getAllPortfolio(@Parameter(description = "User id", required = true, example = "1") @Param("id") Long id) {
 		PortfolioDTO.GetAllPortfolio portfolio = portfolioService.findById(id);
 		HttpHeaders header = new HttpHeaders();
 
@@ -140,7 +140,7 @@ public class PortfolioApiController {
 		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = RepoDTO.ResponseList.class))),
 	})
 	@GetMapping("/lookup")
-	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getPortfolio(@RequestParam String uuid) {
+	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getPortfolio(@Parameter(description = "uuid", required = true, example = "sdfsd-sdfsd") @RequestParam String uuid) {
 		PortfolioDTO.GetAllPortfolio portfolio = portfolioService.findByUuid(uuid);
 		HttpHeaders header = new HttpHeaders();
 

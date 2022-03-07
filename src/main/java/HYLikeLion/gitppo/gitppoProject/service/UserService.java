@@ -17,29 +17,30 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class UserService {
 
-	private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-	@Transactional
-	public User findById(Long id) {
-		Optional<User> optUser = userRepository.findById(id);
+    @Transactional
+    public User findById(Long id) {
+        Optional<User> optUser = userRepository.findById(id);
 
-		return optUser.orElseThrow(() -> new NullPointerException("해당 id의 유저가 존재하지 않습니다."));
-	}
+        return optUser.orElseThrow(() -> new NullPointerException("해당 id의 유저가 존재하지 않습니다."));
+    }
 
-	@Transactional
-	public User saveOrUpdate(JsonNode root) {
-		User authUser = userRepository.findByGithubId(root.path("id").asLong())
-			.map(entity -> entity.update(root.path("name").asText(), root.path("email").asText(), LocalDate.now()))
-			.orElse(User.builder()
-				.name(root.path("name").asText())
-				.githubId(root.path("id").asLong())
-				.githubUserName(root.path("login").asText())
-				.email(root.path("email").asText())
-				.joinDate(LocalDate.now())
-				.loginDate(LocalDate.now())
-				.role(Role.USER)
-				.build());
-		;
-		return userRepository.save(authUser);
-	}
+    @Transactional
+    public User saveOrUpdate(JsonNode root) {
+        User authUser = userRepository.findByGithubId(root.path("id").asLong())
+            .map(entity -> entity.update(root.path("name").asText(), root.path("email").asText(),
+                LocalDate.now(), Role.USER))
+            .orElse(User.builder()
+                .name(root.path("name").asText())
+                .githubId(root.path("id").asLong())
+                .githubUserName(root.path("login").asText())
+                .email(root.path("email").asText())
+                .joinDate(LocalDate.now())
+                .loginDate(LocalDate.now())
+                .role(Role.FIRST)
+                .build());
+        ;
+        return userRepository.save(authUser);
+    }
 }

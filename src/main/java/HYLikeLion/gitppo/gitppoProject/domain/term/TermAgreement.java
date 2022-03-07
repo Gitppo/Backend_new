@@ -1,5 +1,6 @@
 package HYLikeLion.gitppo.gitppoProject.domain.term;
 
+import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -22,34 +23,36 @@ import lombok.NonNull;
 @Schema(description = "약관 동의 여부")
 public class TermAgreement {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "TERM_AG_ID")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TERM_AG_ID")
+    private Long id;
 
-	//    유저는 아직 안만들어져서 일단 없는 상태로 해놓음.
-	//    @OneToOne
-	//    @NonNull
-	//    private User user_id;
+    @OneToOne
+    @NonNull
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
-	@OneToOne
-	@NonNull
-	@JoinColumn(name = "TERM_ID")
-	private Term term;
+    @OneToOne
+    @NonNull
+    @JoinColumn(name = "TERM_ID")
+    private Term term;
 
-	@NonNull
-	@Schema(description = "약관 동의일")
-	private LocalDateTime agreeDate;
+    @NonNull
+    @Schema(description = "약관 동의일")
+    private LocalDateTime agreeDate;
 
-	@NonNull
-	@Column(nullable = false, columnDefinition = "tinyint default 1")
-	@Schema(description = "약관 동의 여부", defaultValue = "1")
-	private Boolean isAgree;
+    @NonNull
+    @Column(nullable = false, columnDefinition = "tinyint default 1")
+    @Schema(description = "약관 동의 여부", defaultValue = "1")
+    private Boolean isAgree;
 
-	@Builder
-	public TermAgreement(@NonNull Term term, @NonNull LocalDateTime agreeDate, @NonNull Boolean isAgree) {
-		this.term = term;
-		this.agreeDate = agreeDate;
-		this.isAgree = isAgree;
-	}
+    @Builder
+    public TermAgreement(@NonNull Term term, @NonNull LocalDateTime agreeDate,
+        @NonNull Boolean isAgree, User user) {
+        this.term = term;
+        this.agreeDate = agreeDate;
+        this.isAgree = isAgree;
+        this.user = user;
+    }
 }

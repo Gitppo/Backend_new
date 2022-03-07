@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import HYLikeLion.gitppo.gitppoProject.domain.BaseTimeEntity;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class Repo extends BaseTimeEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "PF_ID")
+	@Getter(AccessLevel.NONE)
 	private Portfolio portfolio;
 
 	@Column(nullable = false)
