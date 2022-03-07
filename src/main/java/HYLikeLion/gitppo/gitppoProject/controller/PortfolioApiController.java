@@ -119,7 +119,7 @@ public class PortfolioApiController {
 
 	@Operation(summary = "포트폴리오 id로 조회")
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = Portfolio.class))),
+		@ApiResponse(responseCode = "200", description = "포트폴리오 조회 완료", content = @Content(schema = @Schema(implementation = PortfolioDTO.ResponsePortfolio.class))),
 	})
 	@GetMapping("/all")
 	public ResponseEntity<PortfolioDTO.ResponsePortfolio> getAllPortfolio(@Parameter(description = "User id", required = true, example = "1") @Param("id") Long id) {
