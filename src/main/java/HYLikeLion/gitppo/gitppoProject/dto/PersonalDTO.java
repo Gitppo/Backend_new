@@ -10,45 +10,73 @@ import lombok.NoArgsConstructor;
 
 public class PersonalDTO {
 
-	@NoArgsConstructor
-	@Data
-	public static class AddPersonal {
-		private Long id;
-		private Long pfId;
-		private Introduction introduction;
-		private BasicInfo basicInfo;
+    @NoArgsConstructor
+    @Data
+    public static class AddPersonal {
 
-		private List<Career> careers;
-		private List<Education> educations;
-		private List<License> licenses;
-		private List<Activity> activities;
-		private List<Award> awards;
-		private List<Sns> snsList;
-		private List<Skill> skills;
-		private List<Paper> papers;
+        private Long pfId;
+        private Introduction introduction;
+        private BasicInfo basicInfo;
 
-		public Personal toEntity(Portfolio portfolio) {
-			return Personal.builder()
-				.id(id)
-				.introduction(introduction)
-				.basicInfo(basicInfo)
-				.careers(careers)
-				.educations(educations)
-				.licenses(licenses)
-				.activities(activities)
-				.awards(awards)
-				.snsList(snsList)
-				.skills(skills)
-				.papers(papers)
-				.portfolio(portfolio)
-				.build();
-		}
-	}
+        private List<Career> careers;
+        private List<Education> educations;
+        private List<License> licenses;
+        private List<Activity> activities;
+        private List<Award> awards;
+        private List<Sns> snsList;
+        private List<Skill> skills;
+        private List<Paper> papers;
 
-	@NoArgsConstructor
-	@Data
-	public static class UpdatePersonal {
-		private Personal personal;
-	}
+        public Personal toEntity(Portfolio portfolio) {
+            return Personal.builder()
+                .introduction(introduction)
+                .basicInfo(basicInfo)
+                .careers(careers)
+                .educations(educations)
+                .licenses(licenses)
+                .activities(activities)
+                .awards(awards)
+                .snsList(snsList)
+                .skills(skills)
+                .papers(papers)
+                .portfolio(portfolio)
+                .build();
+        }
+    }
 
+    @NoArgsConstructor
+    @Data
+    public static class EditPersonal {
+
+        private Long id;
+        private Long pfId;
+        private Introduction introduction;
+        private BasicInfo basicInfo;
+
+        private List<Career> careers;
+        private List<Education> educations;
+        private List<License> licenses;
+        private List<Activity> activities;
+        private List<Award> awards;
+        private List<Sns> snsList;
+        private List<Skill> skills;
+        private List<Paper> papers;
+
+        public Personal toEntity(Portfolio portfolio) {
+            return Personal.builder()
+                .id(id)
+                .portfolio(portfolio)
+                .introduction(introduction)
+                .basicInfo(basicInfo)
+                .careers(careers)
+                .educations(educations)
+                .licenses(licenses)
+                .activities(activities)
+                .awards(awards)
+                .snsList(snsList)
+                .skills(skills)
+                .papers(papers)
+                .build();
+        }
+    }
 }

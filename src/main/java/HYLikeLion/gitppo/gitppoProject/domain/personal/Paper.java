@@ -24,7 +24,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-@Setter
 @Getter
 @Schema(description = "출판,논문,특허")
 public class Paper {
@@ -56,9 +55,10 @@ public class Paper {
 	@Schema(description = "링크")
 	private String ppLink;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="PERSONAL_ID")
 	@Getter(AccessLevel.NONE)
+	@Setter
 	private Personal personal;
 
 }

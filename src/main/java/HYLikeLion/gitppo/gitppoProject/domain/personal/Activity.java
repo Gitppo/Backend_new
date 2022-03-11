@@ -22,35 +22,45 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Setter
 @Getter
 @Schema(description = "활동")
 public class Activity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ACTIVITY_ID")
-	private Long id;
 
-	@NonNull
-	@Schema(description = "활동명")
-	private String actName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ACTIVITY_ID")
+    private Long id;
 
-	@NonNull
-	@Schema(description = "활동 내용")
-	private String actContents;
+    @NonNull
+    @Schema(description = "활동명")
+    private String actName;
 
-	@NonNull
-	@Schema(description = "활동 시작일")
-	private LocalDate actStartDate;
+    @NonNull
+    @Schema(description = "활동 내용")
+    private String actContents;
 
-	@Schema(description = "활동 종료일")
-	private LocalDate actEndDate;
+    @NonNull
+    @Schema(description = "활동 시작일")
+    private LocalDate actStartDate;
 
-	@Schema(description = "활동 링크")
-	private String actLink;
+    @Schema(description = "활동 종료일")
+    private LocalDate actEndDate;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="PERSONAL_ID")
-	@Getter(AccessLevel.NONE)
-	private Personal personal;
+    @Schema(description = "활동 링크")
+    private String actLink;
+
+    @ManyToOne
+    @JoinColumn(name = "PERSONAL_ID")
+    @Getter(AccessLevel.NONE)
+    @Setter
+    private Personal personal;
+
+    public void update(String actName, String actContents, LocalDate actStartDate,
+        LocalDate actEndDate, String actLink) {
+        this.actName = actName;
+        this.actContents = actContents;
+        this.actStartDate = actStartDate;
+        this.actEndDate = actEndDate;
+        this.actLink = actLink;
+    }
 }

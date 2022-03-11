@@ -22,25 +22,31 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-@Setter
 @Getter
 @Schema(description = "기술 스택")
 public class Skill {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "SKILL_ID")
-	private Long id;
 
-	@NonNull
-	@Schema(description = "이름")
-	private String skName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SKILL_ID")
+    private Long id;
 
-	@NonNull
-	@Schema(description = "레벨")
-	private String skLevel;
+    @NonNull
+    @Schema(description = "이름")
+    private String skName;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="PERSONAL_ID")
-	@Getter(AccessLevel.NONE)
-	private Personal personal;
+    @NonNull
+    @Schema(description = "레벨")
+    private String skLevel;
+
+    @ManyToOne
+    @JoinColumn(name = "PERSONAL_ID")
+    @Getter(AccessLevel.NONE)
+    @Setter
+    private Personal personal;
+
+    public void update(String skName, String skLevel) {
+        this.skLevel = skLevel;
+        this.skName = skName;
+    }
 }

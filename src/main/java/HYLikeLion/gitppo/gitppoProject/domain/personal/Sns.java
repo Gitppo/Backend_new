@@ -22,25 +22,26 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-@Setter
 @Getter
 @Schema(description = "SNS")
 public class Sns {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "SNS_ID")
-	private Long id;
 
-	@NonNull
-	@Schema(description = "이름")
-	private String snsName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SNS_ID")
+    private Long id;
 
-	@NonNull
-	@Schema(description = "링크")
-	private String snsLink;
+    @NonNull
+    @Schema(description = "이름")
+    private String snsName;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PERSONAL_ID")
-	@Getter(AccessLevel.NONE)
-	private Personal personal;
+    @NonNull
+    @Schema(description = "링크")
+    private String snsLink;
+
+    @ManyToOne
+    @JoinColumn(name = "PERSONAL_ID")
+    @Getter(AccessLevel.NONE)
+    @Setter
+    private Personal personal;
 }

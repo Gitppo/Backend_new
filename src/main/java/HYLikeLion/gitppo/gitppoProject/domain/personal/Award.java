@@ -23,34 +23,42 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
-@Setter
 @Getter
 @Schema(description = "수상 실적")
 public class Award {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "AWARD_ID")
-	private Long id;
 
-	@NonNull
-	@Schema(description = "이름")
-	private String awName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "AWARD_ID")
+    private Long id;
 
-	@NonNull
-	@Schema(description = "수상 내용")
-	private String awContents;
+    @NonNull
+    @Schema(description = "이름")
+    private String awName;
 
-	@NonNull
-	@Schema(description = "수상일")
-	private LocalDate awDate;
+    @NonNull
+    @Schema(description = "수상 내용")
+    private String awContents;
 
-	@NonNull
-	@Schema(description = "발급기관")
-	private String awOrganization;
+    @NonNull
+    @Schema(description = "수상일")
+    private LocalDate awDate;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PERSONAL_ID")
-	@Getter(AccessLevel.NONE)
-	private Personal personal;
+    @NonNull
+    @Schema(description = "발급기관")
+    private String awOrganization;
+
+    @ManyToOne
+    @JoinColumn(name = "PERSONAL_ID")
+    @Getter(AccessLevel.NONE)
+    @Setter
+    private Personal personal;
+
+    public void update(@NonNull String awName, @NonNull String awContents,
+        @NonNull LocalDate awDate, @NonNull String awOrganization) {
+        this.awName = awName;
+        this.awContents = awContents;
+        this.awDate = awDate;
+        this.awOrganization = awOrganization;
+    }
 }
