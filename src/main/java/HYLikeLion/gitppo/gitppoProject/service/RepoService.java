@@ -129,4 +129,12 @@ public class RepoService {
 
 		return data.getId();
 	}
+
+	@Transactional
+	public void deleteRepo(Long id) {
+		repoRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("해당 레포가 존재하지 않습니다. id=" + id));
+
+		repoRepository.deleteById(id);
+	}
 }

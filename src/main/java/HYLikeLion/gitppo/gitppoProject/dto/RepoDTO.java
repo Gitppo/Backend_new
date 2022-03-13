@@ -138,16 +138,4 @@ public class RepoDTO {
 		}
 	}
 
-	@NoArgsConstructor
-	@Getter
-	public static class AddRepoGroup {
-		private Long pfId;
-		private String gpName;
-
-		@Builder
-		public AddRepoGroup(Long pfId, String gpName) {
-			this.pfId = pfId;
-			this.gpName = gpName;
-		}
-	}
 }
