@@ -24,7 +24,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-@Setter
 @Getter
 @Schema(description = "경력")
 public class Career {
@@ -57,8 +56,9 @@ public class Career {
 	@Schema(description = "직책")
 	private String carPosition;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "PERSONAL_ID")
 	@Getter(AccessLevel.NONE)
+	@Setter
 	private Personal personal;
 }

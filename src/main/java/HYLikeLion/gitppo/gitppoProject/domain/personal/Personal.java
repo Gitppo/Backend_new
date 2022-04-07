@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,44 +26,67 @@ import lombok.Setter;
 @Builder
 @Getter
 public class Personal {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "PERSONAL_ID")
-	private Long id;
 
-	@OneToOne
-	@JoinColumn(name = "PF_ID")
-	private Portfolio portfolio;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PERSONAL_ID")
+    private Long id;
 
-	@OneToOne(orphanRemoval = true)
-	@JoinColumn(name = "INTRO_ID")
-	private Introduction introduction;
+    @OneToOne
+    @JoinColumn(name = "PF_ID")
+    @Getter(AccessLevel.PACKAGE)
+    private Portfolio portfolio;
 
-	@OneToOne(orphanRemoval = true)
-	@JoinColumn(name = "BASICINFO_ID")
-	private BasicInfo basicInfo;
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "INTRO_ID")
+    private Introduction introduction;
 
-	@OneToMany(mappedBy = "personal", orphanRemoval = true)
-	private List<Career> careers = new ArrayList<>();
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "BASICINFO_ID")
+    private BasicInfo basicInfo;
 
-	@OneToMany(mappedBy = "personal", orphanRemoval = true)
-	private List<Education> educations = new ArrayList<>();
+    @OneToMany(mappedBy = "personal", orphanRemoval = true)
+    private List<Career> careers;
 
-	@OneToMany(mappedBy = "personal", orphanRemoval = true)
-	private List<License> licenses = new ArrayList<>();
+    @OneToMany(mappedBy = "personal", orphanRemoval = true)
+    private List<Education> educations;
 
-	@OneToMany(mappedBy = "personal", orphanRemoval = true)
-	private List<Activity> activities = new ArrayList<>();
+    @OneToMany(mappedBy = "personal", orphanRemoval = true)
+    private List<License> licenses;
 
-	@OneToMany(mappedBy = "personal", orphanRemoval = true)
-	private List<Award> awards = new ArrayList<>();
+    @OneToMany(mappedBy = "personal", orphanRemoval = true)
+    private List<Activity> activities;
 
-	@OneToMany(mappedBy = "personal", orphanRemoval = true)
-	private List<Sns> snsList = new ArrayList<>();
+    @OneToMany(mappedBy = "personal", orphanRemoval = true)
+    private List<Award> awards;
 
-	@OneToMany(mappedBy = "personal", orphanRemoval = true)
-	private List<Skill> skills = new ArrayList<>();
+    @OneToMany(mappedBy = "personal", orphanRemoval = true)
+    private List<Sns> snsList;
 
-	@OneToMany(mappedBy = "personal", orphanRemoval = true)
-	private List<Paper> papers = new ArrayList<>();
+    @OneToMany(mappedBy = "personal", orphanRemoval = true)
+    private List<Skill> skills;
+
+    @OneToMany(mappedBy = "personal", orphanRemoval = true)
+    private List<Paper> papers;
+
+    public void update(Introduction introduction,
+        BasicInfo basicInfo,
+        List<Career> careers,
+        List<Education> educations,
+        List<License> licenses,
+        List<Activity> activities,
+        List<Award> awards, List<Sns> snsList,
+        List<Skill> skills,
+        List<Paper> papers) {
+        this.introduction = introduction;
+        this.basicInfo = basicInfo;
+        this.careers = careers;
+        this.educations = educations;
+        this.licenses = licenses;
+        this.activities = activities;
+        this.awards = awards;
+        this.snsList = snsList;
+        this.skills = skills;
+        this.papers = papers;
+    }
 }

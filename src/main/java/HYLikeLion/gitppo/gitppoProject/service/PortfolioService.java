@@ -82,6 +82,8 @@ public class PortfolioService {
 			.personal(portfolio.getPersonal())
 			.repo(portfolio.getRepo())
 			.pfShare(portfolio.getPfShare())
+			.createdDate(portfolio.getCreatedDate())
+			.modifiedDate(portfolio.getModifiedDate())
 			.build();
 	}
 
@@ -100,6 +102,8 @@ public class PortfolioService {
 			.personal(portfolio.getPersonal())
 			.repo(portfolio.getRepo())
 			.pfShare(portfolio.getPfShare())
+			.modifiedDate(portfolio.getModifiedDate())
+			.createdDate(portfolio.getCreatedDate())
 			.build();
 	}
 

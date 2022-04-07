@@ -22,7 +22,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Setter
 @Getter
 @Schema(description = "자격증")
 public class License {
@@ -47,8 +46,9 @@ public class License {
 	@Schema(description = "등급레벨급수")
 	private String licLevel;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="PERSONAL_ID")
 	@Getter(AccessLevel.NONE)
+	@Setter
 	private Personal personal;
 }

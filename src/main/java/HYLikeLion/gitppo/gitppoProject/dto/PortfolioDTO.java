@@ -1,5 +1,6 @@
 package HYLikeLion.gitppo.gitppoProject.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,10 +56,12 @@ public class PortfolioDTO {
 		private String pfUuid;
 		private Boolean pfTmpSave;
 		private Boolean pfShare;
+		private LocalDateTime createdDate;
+		private LocalDateTime modifiedDate;
 
 		@Builder
 		public GetPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfStar, String pfUuid,
-			Boolean pfTmpSave, Boolean pfShare) {
+			Boolean pfTmpSave, Boolean pfShare, LocalDateTime createdDate, LocalDateTime modifiedDate) {
 			this.id = id;
 			this.usrId = usrId;
 			this.pfName = pfName;
@@ -67,11 +70,13 @@ public class PortfolioDTO {
 			this.pfUuid = pfUuid;
 			this.pfTmpSave = pfTmpSave;
 			this.pfShare = pfShare;
+			this.createdDate = createdDate;
+			this.modifiedDate = modifiedDate;
 		}
 
 		public static GetPortfolio from(Portfolio p) {
 			return new GetPortfolio(p.getId(), p.getUser().getId(), p.getPfName(), p.getPfTemplate(), p.getPfStar(),
-				p.getPfUuid(), p.getPfTmpSave(), p.getPfShare());
+				p.getPfUuid(), p.getPfTmpSave(), p.getPfShare(), p.getCreatedDate(), p.getModifiedDate());
 		}
 	}
 
@@ -118,10 +123,12 @@ public class PortfolioDTO {
 		private Personal personal;
 		private List<Repo> repo;
 		private Boolean pfShare;
+		private LocalDateTime createdDate;
+		private LocalDateTime modifiedDate;
 
 		@Builder
 		public GetAllPortfolio(Long id, Long usrId, String pfName, int pfTemplate, Boolean pfStar, String pfUuid,
-			Boolean pfTmpSave, Personal personal, List<Repo> repo, Boolean pfShare) {
+			Boolean pfTmpSave, Personal personal, List<Repo> repo, Boolean pfShare, LocalDateTime createdDate, LocalDateTime modifiedDate) {
 			this.id = id;
 			this.usrId = usrId;
 			this.pfName = pfName;
@@ -132,6 +139,8 @@ public class PortfolioDTO {
 			this.personal = personal;
 			this.repo = repo;
 			this.pfShare = pfShare;
+			this.createdDate = createdDate;
+			this.modifiedDate = modifiedDate;
 		}
 	}
 

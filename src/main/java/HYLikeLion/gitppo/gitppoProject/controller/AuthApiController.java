@@ -23,53 +23,55 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class AuthApiController {
-	// private final String REDIRECT_URL = "http://localhost:30/00";
-	private final String TOKEN_REQUEST_URL = "https://github.com/login/oauth/access_token";
-	private final String PROFILE_REQUEST_URL = "https://api.github.com/user";
-	private final String REDIRECT_URL = "http://localhost:3000";
-	private final UserService userService;
 
-	@PostMapping("/auth")
-	private User getOAuthToken(@RequestParam String code) throws JsonProcessingException {
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.exchange(TOKEN_REQUEST_URL,
-			HttpMethod.POST,
-			getCodeRequestHttpEntity(code),
-			String.class);
+    // private final String REDIRECT_URL = "http://localhost:30/00";
+    private final String TOKEN_REQUEST_URL = "https://github.com/login/oauth/access_token";
+    private final String PROFILE_REQUEST_URL = "https://api.github.com/user";
+    private final String REDIRECT_URL = "http://gitppo.github.io/Frontend/";
+    private final UserService userService;
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		OAuthToken oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
-		System.out.println(oAuthToken);
+    @PostMapping("/auth")
+    private User getOAuthToken(@RequestParam String code) throws JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(TOKEN_REQUEST_URL,
+            HttpMethod.POST,
+            getCodeRequestHttpEntity(code),
+            String.class);
 
-		ResponseEntity<String> profileResponse = restTemplate.exchange(
-			PROFILE_REQUEST_URL,
-			HttpMethod.GET,
-			getProfileRequestEntity(oAuthToken),
-			String.class
-		);
+        ObjectMapper objectMapper = new ObjectMapper();
+        OAuthToken oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+        System.out.println(oAuthToken);
 
-		JsonNode root = objectMapper.readTree(profileResponse.getBody());
+        ResponseEntity<String> profileResponse = restTemplate.exchange(
+            PROFILE_REQUEST_URL,
+            HttpMethod.GET,
+            getProfileRequestEntity(oAuthToken),
+            String.class
+        );
 
-		return userService.saveOrUpdate(root);
-	}
+        JsonNode root = objectMapper.readTree(profileResponse.getBody());
 
-	private HttpEntity<MultiValueMap<String, String>> getCodeRequestHttpEntity(String code) {
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		// 주의!
-		params.add("client_id", "93ad6f9f68a2f8fbd473");
-		params.add("client_secret", "b548d698a91c1057736919d1fc12555f1443b24c");
-		params.add("code", code);
-		params.add("redirect_url", REDIRECT_URL);
+        return userService.saveOrUpdate(root);
+    }
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Accept", "application/json");
-		return new HttpEntity<>(params, headers);
-	}
+    private HttpEntity<MultiValueMap<String, String>> getCodeRequestHttpEntity(String code) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        // 주의!
+        params.add("client_id", "93ad6f9f68a2f8fbd473");
+        params.add("client_secret", "b548d698a91c1057736919d1fc12555f1443b24c");
+        params.add("code", code);
+        params.add("redirect_url", REDIRECT_URL);
 
-	private HttpEntity<MultiValueMap<String, String>> getProfileRequestEntity(OAuthToken oAuthToken) {
-		HttpHeaders infoRequestHeaders = new HttpHeaders();
-		infoRequestHeaders.add("Authorization", "token " + oAuthToken.getAccessToken());
-		return new HttpEntity<>(infoRequestHeaders);
-	}
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", "application/json");
+        return new HttpEntity<>(params, headers);
+    }
+
+    private HttpEntity<MultiValueMap<String, String>> getProfileRequestEntity(
+        OAuthToken oAuthToken) {
+        HttpHeaders infoRequestHeaders = new HttpHeaders();
+        infoRequestHeaders.add("Authorization", "token " + oAuthToken.getAccessToken());
+        return new HttpEntity<>(infoRequestHeaders);
+    }
 
 }

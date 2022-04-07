@@ -4,8 +4,6 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.sampled.Port;
-
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -106,6 +104,7 @@ public class RepoService {
 
 		Repo repo = Repo.builder()
 			.portfolio(portfolio)
+			.repoGitId(data.getRepoGitId())
 			.rpName(data.getRpName())
 			.rpShortContents(data.getRpShortContents())
 			.rpReadme(data.getRpReadme())
@@ -114,6 +113,8 @@ public class RepoService {
 			.rpEdate(data.getRpEdate())
 			.rpRole(data.getRpRole())
 			.rpLongContents(data.getRpLongContents())
+			.rpLanguages(data.getRpLanguages())
+			.rpSkills(data.getRpSkills())
 			.build();
 
 		return repoRepository.save(repo).getId();
@@ -124,8 +125,16 @@ public class RepoService {
 		Repo repo = repoRepository.findById(data.getId())
 			.orElseThrow(() -> new IllegalArgumentException("해당 레포가 존재하지 않습니다. id=" + data.getId()));
 
-		repo.update(data.getRpName(), data.getRpShortContents(), data.getRpReadme(), data.getRpStar(), data.getRpSdate(), data.getRpEdate(), data.getRpRole(), data.getRpLongContents());
+		repo.update(data.getRpName(), data.getRpShortContents(), data.getRpReadme(), data.getRpStar(), data.getRpSdate(), data.getRpEdate(), data.getRpRole(), data.getRpLongContents(), data.getRpLanguages(), data.getRpSkills());
 
 		return data.getId();
+	}
+
+	@Transactional
+	public void deleteRepo(Long id) {
+		repoRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("해당 레포가 존재하지 않습니다. id=" + id));
+
+		repoRepository.deleteById(id);
 	}
 }

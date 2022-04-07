@@ -24,7 +24,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-@Setter
 @Getter
 @Schema(description = "학력")
 public class Education {
@@ -58,8 +57,9 @@ public class Education {
 	@Schema(description = "고등, 대학, 대학원")
 	private String eduType;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "PERSONAL_ID")
 	@Getter(AccessLevel.NONE)
+	@Setter
 	private Personal personal;
 }
