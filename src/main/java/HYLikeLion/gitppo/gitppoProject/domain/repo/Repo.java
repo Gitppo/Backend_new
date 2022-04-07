@@ -77,6 +77,10 @@ public class Repo extends BaseTimeEntity {
 	@Schema(description = "긴 내용")
 	private String rpLongContents;
 
+	@Column(columnDefinition = "TEXT")
+	@Schema(description = "URL")
+	private String rpUrl;
+
 	@ElementCollection
 	@CollectionTable(name="언어")
 	private Map<String, Long> rpLanguages = new HashMap<>();
@@ -86,7 +90,7 @@ public class Repo extends BaseTimeEntity {
 	private List<String> rpSkills = new ArrayList<>();
 
 	@Builder
-	public Repo(Portfolio portfolio, Long repoGitId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, Map<String, Long> rpLanguages, List<String> rpSkills) {
+	public Repo(Portfolio portfolio, Long repoGitId, String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, String rpUrl, Map<String, Long> rpLanguages, List<String> rpSkills) {
 		this.portfolio = portfolio;
 		this.repoGitId = repoGitId;
 		this.rpName = rpName;
@@ -97,11 +101,12 @@ public class Repo extends BaseTimeEntity {
 		this.rpEdate = rpEdate;
 		this.rpRole = rpRole;
 		this.rpLongContents = rpLongContents;
+		this.rpUrl = rpUrl;
 		this.rpLanguages = rpLanguages;
 		this.rpSkills = rpSkills;
 	}
 
-	public void update(String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, Map<String, Long> rpLanguages, List<String> rpSkills) {
+	public void update(String rpName, String rpShortContents, String rpReadme, Long rpStar, LocalDate rpSdate, LocalDate rpEdate, String rpRole, String rpLongContents, String rpUrl, Map<String, Long> rpLanguages, List<String> rpSkills) {
 		this.rpName = rpName;
 		this.rpShortContents = rpShortContents;
 		this.rpReadme = rpReadme;
@@ -110,6 +115,7 @@ public class Repo extends BaseTimeEntity {
 		this.rpEdate = rpEdate;
 		this.rpRole = rpRole;
 		this.rpLongContents = rpLongContents;
+		this.rpUrl = rpUrl;
 		this.rpLanguages = rpLanguages;
 		this.rpSkills = rpSkills;
 	}

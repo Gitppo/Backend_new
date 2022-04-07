@@ -113,6 +113,7 @@ public class RepoService {
 			.rpEdate(data.getRpEdate())
 			.rpRole(data.getRpRole())
 			.rpLongContents(data.getRpLongContents())
+			.rpUrl(data.getRpUrl())
 			.rpLanguages(data.getRpLanguages())
 			.rpSkills(data.getRpSkills())
 			.build();
@@ -125,7 +126,7 @@ public class RepoService {
 		Repo repo = repoRepository.findById(data.getId())
 			.orElseThrow(() -> new IllegalArgumentException("해당 레포가 존재하지 않습니다. id=" + data.getId()));
 
-		repo.update(data.getRpName(), data.getRpShortContents(), data.getRpReadme(), data.getRpStar(), data.getRpSdate(), data.getRpEdate(), data.getRpRole(), data.getRpLongContents(), data.getRpLanguages(), data.getRpSkills());
+		repo.update(data.getRpName(), data.getRpShortContents(), data.getRpReadme(), data.getRpStar(), data.getRpSdate(), data.getRpEdate(), data.getRpRole(), data.getRpLongContents(), data.getRpUrl(), data.getRpLanguages(), data.getRpSkills());
 
 		return data.getId();
 	}
