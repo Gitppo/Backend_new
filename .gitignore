@@ -36,5 +36,9 @@ out/
 ### VS Code ###
 .vscode/
 
+
+# Custom
 application-oauth.properties
 application-aws.properties
+application-local.properties
+src/main/resources/gitppo-storage-firebase-adminsdk-rjpbq-8e83fc0af3.json
