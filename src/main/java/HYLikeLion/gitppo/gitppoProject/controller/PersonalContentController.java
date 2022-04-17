@@ -1,7 +1,5 @@
 package HYLikeLion.gitppo.gitppoProject.controller;
 
-import HYLikeLion.gitppo.gitppoProject.domain.personal.Skill;
-import HYLikeLion.gitppo.gitppoProject.domain.personal.Sns;
 import HYLikeLion.gitppo.gitppoProject.dto.ResponseDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.ResponseDTO.ResponseId;
 import HYLikeLion.gitppo.gitppoProject.dto.StatusEnum;
@@ -9,7 +7,6 @@ import HYLikeLion.gitppo.gitppoProject.service.personal.ActivityService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.AwardsService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.CareerService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.EducationService;
-import HYLikeLion.gitppo.gitppoProject.service.personal.IntroductionService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.LicenseService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.PaperService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.SkillService;

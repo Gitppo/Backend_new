@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonalApiController {
 
     private final PersonalService personalService;
-    private final PortfolioService portfolioService;
 
     @Operation(summary = "개인정보 조회")
     @ApiResponses({
