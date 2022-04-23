@@ -1,5 +1,6 @@
 package HYLikeLion.gitppo.gitppoProject.controller;
 
+import HYLikeLion.gitppo.gitppoProject.dto.SkillListDTO;
 import java.util.List;
 
 import org.springframework.http.HttpHeaders;
@@ -25,23 +26,23 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/")
 public class skillListController {
-	private final SkillListService skillListService;
+    private final SkillListService skillListService;
 
-	@Operation(summary = "기술 스텍 리스트 조회")
-	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "스킬 리스트 조회 완료", content = @Content(schema = @Schema(implementation = SkillContent.class))),
-	})
-	@GetMapping("/skillList")
-	public ResponseEntity<ResponseDTO.ResponseObject> getSkillList() throws NotFoundException {
-		HttpHeaders header = new HttpHeaders();
-		List<SkillContent> skills = skillListService.findSkillList();
+    @Operation(summary = "기술 스텍 리스트 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "스킬 리스트 조회 완료", content = @Content(schema = @Schema(implementation = SkillListDTO.ResponseList.class))),
+    })
+    @GetMapping("/skillList")
+    public ResponseEntity<SkillListDTO.ResponseList> getSkillList() {
+        HttpHeaders header = new HttpHeaders();
+        List<SkillContent> skills = skillListService.findSkillList();
 
-		ResponseDTO.ResponseObject dto = ResponseDTO.ResponseObject.builder()
-			.status(StatusEnum.OK)
-			.data(skills)
-			.message("스킬 리스트 조회 완료")
-			.build();
+        SkillListDTO.ResponseList dto = SkillListDTO.ResponseList.builder()
+                .status(StatusEnum.OK)
+                .data(skills)
+                .message("스킬 리스트 조회 완료")
+                .build();
 
-		return new ResponseEntity<>(dto, header, HttpStatus.OK);
-	}
+        return new ResponseEntity<>(dto, header, HttpStatus.OK);
+    }
 }

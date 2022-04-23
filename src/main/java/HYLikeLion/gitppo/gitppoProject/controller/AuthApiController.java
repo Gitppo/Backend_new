@@ -1,5 +1,6 @@
 package HYLikeLion.gitppo.gitppoProject.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,32 +24,25 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class AuthApiController {
-
-    // private final String REDIRECT_URL = "http://localhost:30/00";
-    private final String TOKEN_REQUEST_URL = "https://github.com/login/oauth/access_token";
-    private final String PROFILE_REQUEST_URL = "https://api.github.com/user";
-    private final String REDIRECT_URL = "http://gitppo.github.io/Frontend/";
     private final UserService userService;
+
+    @Value("${github.id}")
+    private String id;
+
+    @Value("${github.secret}")
+    private String secret;
 
     @PostMapping("/auth")
     private User getOAuthToken(@RequestParam String code) throws JsonProcessingException {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(TOKEN_REQUEST_URL,
-            HttpMethod.POST,
-            getCodeRequestHttpEntity(code),
-            String.class);
-
+        final String tokenRequestUrl = "https://github.com/login/oauth/access_token";
+        final String profileRequestUrl = "https://api.github.com/user";
         ObjectMapper objectMapper = new ObjectMapper();
+
+        ResponseEntity<String> response = getResponse(getCodeRequestHttpEntity(code), tokenRequestUrl, HttpMethod.POST);
         OAuthToken oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
-        System.out.println(oAuthToken);
 
-        ResponseEntity<String> profileResponse = restTemplate.exchange(
-            PROFILE_REQUEST_URL,
-            HttpMethod.GET,
-            getProfileRequestEntity(oAuthToken),
-            String.class
-        );
-
+        ResponseEntity<String> profileResponse = getResponse(getProfileRequestEntity(oAuthToken), profileRequestUrl,
+                HttpMethod.GET);
         JsonNode root = objectMapper.readTree(profileResponse.getBody());
 
         return userService.saveOrUpdate(root);
@@ -56,9 +50,10 @@ public class AuthApiController {
 
     private HttpEntity<MultiValueMap<String, String>> getCodeRequestHttpEntity(String code) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        // 주의!
-        params.add("client_id", "93ad6f9f68a2f8fbd473");
-        params.add("client_secret", "b548d698a91c1057736919d1fc12555f1443b24c");
+        String REDIRECT_URL = "https://gitppo.github.io/Frontend/";
+
+        params.add("client_id", id);
+        params.add("client_secret", secret);
         params.add("code", code);
         params.add("redirect_url", REDIRECT_URL);
 
@@ -67,11 +62,20 @@ public class AuthApiController {
         return new HttpEntity<>(params, headers);
     }
 
-    private HttpEntity<MultiValueMap<String, String>> getProfileRequestEntity(
-        OAuthToken oAuthToken) {
+    private HttpEntity<MultiValueMap<String, String>> getProfileRequestEntity(OAuthToken oAuthToken) {
         HttpHeaders infoRequestHeaders = new HttpHeaders();
         infoRequestHeaders.add("Authorization", "token " + oAuthToken.getAccessToken());
         return new HttpEntity<>(infoRequestHeaders);
+    }
+
+    private ResponseEntity<String> getResponse(HttpEntity<MultiValueMap<String, String>> requestEntity, String url,
+                                               HttpMethod httpMethod) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.exchange(
+                url,
+                httpMethod,
+                requestEntity,
+                String.class);
     }
 
 }

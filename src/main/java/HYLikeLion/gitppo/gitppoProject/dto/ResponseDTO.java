@@ -6,17 +6,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-public class ResponseDTO {
+public class ResponseDTO{
 
 	@NoArgsConstructor
 	@Getter
-	public static class ResponseObject {
+	public static class ResponseObject <T>{
 		private StatusEnum status;
 		private String message;
-		private Object data;
+		private T data;
 
 		@Builder
-		public ResponseObject(StatusEnum status, String message, Object data) {
+		public ResponseObject(StatusEnum status, String message, T data) {
 			this.status = status;
 			this.message = message;
 			this.data = data;
@@ -25,13 +25,13 @@ public class ResponseDTO {
 
 	@NoArgsConstructor
 	@Getter
-	public static class ResponseList {
+	public static class ResponseList <T>{
 		private StatusEnum status;
 		private String message;
-		private List<Object> data;
+		private List<T> data;
 
 		@Builder
-		public ResponseList(StatusEnum status, String message, List<Object> data) {
+		public ResponseList(StatusEnum status, String message, List<T> data) {
 			this.status = status;
 			this.message = message;
 			this.data = data;

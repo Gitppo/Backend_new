@@ -1,8 +1,5 @@
 package HYLikeLion.gitppo.gitppoProject.controller;
 
-import java.util.List;
-
-import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.domain.term.Term;
 import HYLikeLion.gitppo.gitppoProject.domain.term.TermAgreement;
 import HYLikeLion.gitppo.gitppoProject.dto.TermDTO;
@@ -12,9 +9,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import javassist.NotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +32,7 @@ public class TermApiController {
 		@ApiResponse(responseCode = "200", description = "약관 조회 완료", content = @Content(schema = @Schema(implementation = TermDTO.GetResult.class))),
 	})
 	@GetMapping("/term")
-	public ResponseEntity<TermDTO.GetResult> getTerms() throws NotFoundException {
+	public ResponseEntity<TermDTO.GetResult> getTerms(){
 		List<Term> terms = termService.findTerms();
 		HttpHeaders header = new HttpHeaders();
 

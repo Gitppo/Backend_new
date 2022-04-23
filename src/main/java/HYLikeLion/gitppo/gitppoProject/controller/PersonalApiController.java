@@ -5,7 +5,6 @@ import HYLikeLion.gitppo.gitppoProject.dto.PersonalDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.ResponseDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.StatusEnum;
 import HYLikeLion.gitppo.gitppoProject.service.PersonalService;
-import HYLikeLion.gitppo.gitppoProject.service.PortfolioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,82 +31,81 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonalApiController {
 
     private final PersonalService personalService;
-    private final PortfolioService portfolioService;
 
     @Operation(summary = "개인정보 조회")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "개인 정보 조회 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "개인 정보 조회 완료", content = @Content(schema = @Schema(implementation = PersonalDTO.ResponsePersonal.class))),
     })
     @GetMapping("personal")
-    public ResponseEntity<ResponseDTO.ResponseObject> getPortfolio(
-        @Parameter(description = "Personal id", example = "1") @RequestParam Long id) throws
-        NotFoundException {
+    public ResponseEntity<PersonalDTO.ResponsePersonal> getPortfolio(
+            @Parameter(description = "Personal id", example = "1") @RequestParam Long id) throws
+            NotFoundException {
         Personal personal = personalService.getPersonal(id);
         HttpHeaders header = new HttpHeaders();
 
-        ResponseDTO.ResponseObject dto = ResponseDTO.ResponseObject.builder()
-            .status(StatusEnum.OK)
-            .data(personal)
-            .message("개인 정보 조회 완료")
-            .build();
+        PersonalDTO.ResponsePersonal dto = PersonalDTO.ResponsePersonal.builder()
+                .status(StatusEnum.OK)
+                .data(personal)
+                .message("개인 정보 조회 완료")
+                .build();
 
         return new ResponseEntity<>(dto, header, HttpStatus.OK);
     }
 
     @Operation(summary = "개인정보 저장")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "개인 정보 저장 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
+            @ApiResponse(responseCode = "200", description = "개인 정보 저장 완료", content = @Content(schema = @Schema(implementation = PersonalDTO.ResponsePersonal.class))),
     })
     @PostMapping("personal")
-    public ResponseEntity<ResponseDTO.ResponseObject> postPortfolio(
-        @RequestBody PersonalDTO.AddPersonal dto) {
+    public ResponseEntity<PersonalDTO.ResponsePersonal> postPortfolio(
+            @RequestBody PersonalDTO.AddPersonal dto) {
         Personal personal = personalService.savePersonal(dto);
         HttpHeaders header = new HttpHeaders();
 
-        ResponseDTO.ResponseObject response = ResponseDTO.ResponseObject.builder()
-            .status(StatusEnum.OK)
-            .data(personal)
-            .message("개인 정보 저장 완료")
-            .build();
+        PersonalDTO.ResponsePersonal response = PersonalDTO.ResponsePersonal.builder()
+                .status(StatusEnum.OK)
+                .data(personal)
+                .message("개인 정보 저장 완료")
+                .build();
 
         return new ResponseEntity<>(response, header, HttpStatus.OK);
     }
 
     @Operation(summary = "개인정보 삭제")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "개인 정보 삭제 완료"),
+            @ApiResponse(responseCode = "200", description = "개인 정보 삭제 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseId.class))),
     })
     @DeleteMapping("personal")
     public ResponseEntity<ResponseDTO.ResponseId> deletePortfolio(
-        @Parameter(description = "Personal id", required = true, example = "1") @RequestParam Long id) {
+            @Parameter(description = "Personal id", required = true, example = "1") @RequestParam Long id) {
         personalService.deletePersonal(id);
 
         HttpHeaders header = new HttpHeaders();
 
         ResponseDTO.ResponseId response = ResponseDTO.ResponseId.builder()
-            .status(StatusEnum.OK)
-            .id(id)
-            .message("개인 정보 삭제 완료")
-            .build();
+                .status(StatusEnum.OK)
+                .id(id)
+                .message("개인 정보 삭제 완료")
+                .build();
 
         return new ResponseEntity<>(response, header, HttpStatus.OK);
     }
 
     @Operation(summary = "개인정보 수정")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "개인 정보 수정 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
+            @ApiResponse(responseCode = "200", description = "개인 정보 수정 완료", content = @Content(schema = @Schema(implementation = PersonalDTO.ResponsePersonal.class))),
     })
     @PutMapping("personal")
-    public ResponseEntity<ResponseDTO.ResponseObject> editPersonal(
-        @RequestBody PersonalDTO.EditPersonal dto) throws NotFoundException {
+    public ResponseEntity<PersonalDTO.ResponsePersonal> editPersonal(
+            @RequestBody PersonalDTO.EditPersonal dto) throws NotFoundException {
         Personal personal = personalService.editPersonal(dto);
         HttpHeaders header = new HttpHeaders();
 
-        ResponseDTO.ResponseObject response = ResponseDTO.ResponseObject.builder()
-            .status(StatusEnum.OK)
-            .data(personal)
-            .message("개인 정보 저장 완료")
-            .build();
+        PersonalDTO.ResponsePersonal response = PersonalDTO.ResponsePersonal.builder()
+                .status(StatusEnum.OK)
+                .data(personal)
+                .message("개인 정보 저장 완료")
+                .build();
 
         return new ResponseEntity<>(response, header, HttpStatus.OK);
     }

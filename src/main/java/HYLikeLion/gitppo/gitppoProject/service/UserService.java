@@ -21,26 +21,25 @@ public class UserService {
 
     @Transactional
     public User findById(Long id) {
-        Optional<User> optUser = userRepository.findById(id);
-
-        return optUser.orElseThrow(() -> new NullPointerException("해당 id의 유저가 존재하지 않습니다."));
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 id가 존재하지 않습니다. id = " + id));
     }
 
     @Transactional
     public User saveOrUpdate(JsonNode root) {
         User authUser = userRepository.findByGithubId(root.path("id").asLong())
-            .map(entity -> entity.update(root.path("name").asText(), root.path("email").asText(),
-                LocalDate.now(), Role.USER))
-            .orElse(User.builder()
-                .name(root.path("name").asText())
-                .githubId(root.path("id").asLong())
-                .githubUserName(root.path("login").asText())
-                .email(root.path("email").asText())
-                .joinDate(LocalDate.now())
-                .loginDate(LocalDate.now())
-                .role(Role.FIRST)
-                .build());
-        ;
+                .map(entity -> entity.update(root.path("name").asText(), root.path("email").asText(),
+                        LocalDate.now(), Role.USER))
+                .orElse(User.builder()
+                        .name(root.path("name").asText())
+                        .githubId(root.path("id").asLong())
+                        .githubUserName(root.path("login").asText())
+                        .email(root.path("email").asText())
+                        .joinDate(LocalDate.now())
+                        .loginDate(LocalDate.now())
+                        .role(Role.FIRST)
+                        .build());
+
         return userRepository.save(authUser);
     }
 }
