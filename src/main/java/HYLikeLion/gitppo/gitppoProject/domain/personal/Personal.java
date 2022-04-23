@@ -1,8 +1,8 @@
 package HYLikeLion.gitppo.gitppoProject.domain.personal;
 
-import java.util.ArrayList;
+import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,20 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
 @Getter
+@Schema(description = "개인정보")
 public class Personal {
 
     @Id
@@ -70,14 +68,14 @@ public class Personal {
     private List<Paper> papers;
 
     public void update(Introduction introduction,
-        BasicInfo basicInfo,
-        List<Career> careers,
-        List<Education> educations,
-        List<License> licenses,
-        List<Activity> activities,
-        List<Award> awards, List<Sns> snsList,
-        List<Skill> skills,
-        List<Paper> papers) {
+                       BasicInfo basicInfo,
+                       List<Career> careers,
+                       List<Education> educations,
+                       List<License> licenses,
+                       List<Activity> activities,
+                       List<Award> awards, List<Sns> snsList,
+                       List<Skill> skills,
+                       List<Paper> papers) {
         this.introduction = introduction;
         this.basicInfo = basicInfo;
         this.careers = careers;

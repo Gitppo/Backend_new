@@ -4,11 +4,28 @@ import java.util.List;
 
 import HYLikeLion.gitppo.gitppoProject.domain.personal.*;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
-import HYLikeLion.gitppo.gitppoProject.domain.user.User;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class PersonalDTO {
+
+    @NoArgsConstructor
+    @Getter
+    public static class ResponsePersonal {
+        private StatusEnum status;
+        private String message;
+        private Personal data;
+
+        @Builder
+        public ResponsePersonal(StatusEnum status, String message, Personal data) {
+            this.status = status;
+            this.message = message;
+            this.data = data;
+        }
+    }
+
 
     @NoArgsConstructor
     @Data
