@@ -26,6 +26,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
 //    compileOnly 'org.springframework.session:spring-session-jdbc'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

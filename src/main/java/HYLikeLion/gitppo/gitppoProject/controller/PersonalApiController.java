@@ -1,5 +1,7 @@
 package HYLikeLion.gitppo.gitppoProject.controller;
 
+import java.io.IOException;
+
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.dto.PersonalDTO;
 import HYLikeLion.gitppo.gitppoProject.dto.ResponseDTO;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.firebase.auth.FirebaseAuthException;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/")
@@ -36,7 +40,7 @@ public class PersonalApiController {
 
     @Operation(summary = "개인정보 조회")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "개인 정보 조회 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
+        @ApiResponse(responseCode = "200", description = "개인 정보 조회 완료", content = @Content(schema = @Schema(implementation = ResponseDTO.ResponseObject.class))),
     })
     @GetMapping("personal")
     public ResponseEntity<ResponseDTO.ResponseObject> getPortfolio(
@@ -56,11 +60,11 @@ public class PersonalApiController {
 
     @Operation(summary = "개인정보 저장")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "개인 정보 저장 완료", content = @Content(schema = @Schema(implementation = Personal.class))),
+        @ApiResponse(responseCode = "200", description = "개인 정보 저장 완료", content = @Content(schema = @Schema(implementation = PersonalDTO.AddPersonal.class))),
     })
     @PostMapping("personal")
-    public ResponseEntity<ResponseDTO.ResponseObject> postPortfolio(
-        @RequestBody PersonalDTO.AddPersonal dto) {
+    public ResponseEntity<ResponseDTO.ResponseObject> postPortfolio (
+        @RequestBody PersonalDTO.AddPersonal dto) throws IOException, FirebaseAuthException {
         Personal personal = personalService.savePersonal(dto);
         HttpHeaders header = new HttpHeaders();
 
@@ -99,7 +103,7 @@ public class PersonalApiController {
     })
     @PutMapping("personal")
     public ResponseEntity<ResponseDTO.ResponseObject> editPersonal(
-        @RequestBody PersonalDTO.EditPersonal dto) throws NotFoundException {
+        @RequestBody PersonalDTO.EditPersonal dto) throws NotFoundException, IOException, FirebaseAuthException {
         Personal personal = personalService.editPersonal(dto);
         HttpHeaders header = new HttpHeaders();
 

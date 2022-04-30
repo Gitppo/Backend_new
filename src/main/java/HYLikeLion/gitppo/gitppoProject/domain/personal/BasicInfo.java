@@ -9,13 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Setter;
 
 @Entity
 @Builder
@@ -44,7 +42,4 @@ public class BasicInfo {
 	@Schema(description = "전화번호")
 	private String biPhone;
 
-	@NonNull
-	@Schema(description = "이미지")
-	private String biImage;
 }

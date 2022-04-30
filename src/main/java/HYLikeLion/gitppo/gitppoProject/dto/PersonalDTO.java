@@ -2,9 +2,9 @@ package HYLikeLion.gitppo.gitppoProject.dto;
 
 import java.util.List;
 
+import HYLikeLion.gitppo.gitppoProject.domain.image.Image;
 import HYLikeLion.gitppo.gitppoProject.domain.personal.*;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
-import HYLikeLion.gitppo.gitppoProject.domain.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +17,7 @@ public class PersonalDTO {
         private Long pfId;
         private Introduction introduction;
         private BasicInfo basicInfo;
+        private Image image;
 
         private List<Career> careers;
         private List<Education> educations;
@@ -40,6 +41,7 @@ public class PersonalDTO {
                 .skills(skills)
                 .papers(papers)
                 .portfolio(portfolio)
+                .image(image)
                 .build();
         }
     }
@@ -61,10 +63,10 @@ public class PersonalDTO {
         private List<Sns> snsList;
         private List<Skill> skills;
         private List<Paper> papers;
+        private Image image;
 
         public Personal toEntity(Portfolio portfolio) {
             return Personal.builder()
-                .id(id)
                 .portfolio(portfolio)
                 .introduction(introduction)
                 .basicInfo(basicInfo)
@@ -76,6 +78,7 @@ public class PersonalDTO {
                 .snsList(snsList)
                 .skills(skills)
                 .papers(papers)
+                .image(image)
                 .build();
         }
     }
