@@ -1,5 +1,6 @@
 package HYLikeLion.gitppo.gitppoProject.service;
 
+import HYLikeLion.gitppo.gitppoProject.domain.image.Image;
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Activity;
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Award;
 import HYLikeLion.gitppo.gitppoProject.domain.personal.BasicInfo;
@@ -21,11 +22,16 @@ import HYLikeLion.gitppo.gitppoProject.service.personal.LicenseService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.PaperService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.SkillService;
 import HYLikeLion.gitppo.gitppoProject.service.personal.SnsService;
+
+import java.io.IOException;
 import java.time.Period;
 import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.google.firebase.auth.FirebaseAuthException;
 
 import HYLikeLion.gitppo.gitppoProject.domain.personal.Personal;
 import HYLikeLion.gitppo.gitppoProject.domain.portfolio.Portfolio;
@@ -54,7 +60,7 @@ public class PersonalService {
     private final SnsService snsService;
 
     @Transactional
-    public Personal savePersonal(PersonalDTO.AddPersonal tmp) {
+    public Personal savePersonal(PersonalDTO.AddPersonal tmp) throws IOException, FirebaseAuthException {
 
         Portfolio portfolio = portfolioRepository.findById(tmp.getPfId())
             .orElseThrow(
@@ -72,23 +78,23 @@ public class PersonalService {
     }
 
     public void deletePersonal(Long id) {
+        // TODO: Add image delete logic
         personalRepository.deleteById(id);
     }
 
-    public Personal editPersonal(EditPersonal dto) throws NotFoundException {
+    public Personal editPersonal(EditPersonal dto) throws NotFoundException, IOException, FirebaseAuthException {
+
+        // portfolio
         Portfolio portfolio = portfolioRepository.findById(dto.getPfId())
             .orElseThrow(
                 () -> new IllegalArgumentException("해당 포트폴리오가 존재하지 않습니다. id=" + dto.getPfId()));
 
         Personal newPersonal = dto.toEntity(portfolio);
-
         personalRepository.save(newPersonal);
-
 
         savePersonalInfo(newPersonal, dto.getActivities(), dto.getAwards(), dto.getBasicInfo(),
             dto.getCareers(), dto.getEducations(), dto.getIntroduction(), dto.getLicenses(),
             dto.getPapers(), dto.getSkills(), dto.getSnsList());
-
 
         return newPersonal;
     }
